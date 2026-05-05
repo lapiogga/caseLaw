@@ -91,6 +91,9 @@ logs/
 # 영상 파일은 용량이 크므로 git 추적 X (YouTube에 업로드 후 URL만 README 임베드)
 docs/promo/videos/
 
+# Vrew 프로젝트 작업 파일 (개인 작업용, README 노출 대상 아님)
+*.vrew
+
 # 외부 가이드 원본 (저작권 불명확)
 reference/
 
