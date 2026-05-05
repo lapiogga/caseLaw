@@ -2,7 +2,7 @@
 
 > 법제처 국가법령정보 공동활용 OpenAPI(191종)를 **MCP(Model Context Protocol) 서버**로 표준화하여, 변호사·로펌이 Claude Desktop / Cursor / VS Code 등 자연어 환경에서 한국 판례·법령·결정례를 검색·인용·요약할 수 있게 한다.
 
-[![Tests](https://img.shields.io/badge/tests-250%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-44-blue)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
+[![CI](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml/badge.svg)](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml) [![Tests](https://img.shields.io/badge/tests-250%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-44-blue)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
 
 **상태**: v0.8.0 — Tri-Track (변호사 + 일반인 + 외국인) 완성. 활성 MCP Tool **44종**.
 

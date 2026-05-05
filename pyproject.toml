@@ -48,9 +48,6 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/caselaw_mcp"]
 
-[tool.hatch.build.targets.wheel.force-include]
-"src/caselaw_mcp/citizen_data" = "caselaw_mcp/citizen_data"
-
 # ─────────────────────────────────────────────
 # Ruff (lint + format 통합)
 # ─────────────────────────────────────────────
