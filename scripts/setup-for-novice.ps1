@@ -110,13 +110,20 @@ Write-Ok 'winget 사용 가능'
 if (-not (Test-Command 'uv')) {
     Write-Host ''
     Write-Host '   uv (Python 도구) 가 없습니다. 자동 설치합니다 (1-2분)...'
+    $prevEAP = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    $uvInstallOk = $false
     try {
         winget install --id astral-sh.uv --silent --accept-package-agreements --accept-source-agreements 2>&1 | Out-Null
-        # PATH 새로고침
         $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'User')
-        Write-Ok 'uv 설치 완료'
+        if (Test-Command 'uv') { $uvInstallOk = $true }
     } catch {
-        Write-Err "uv 설치 실패: $_"
+        Write-Warn "winget 호출 중 메시지: $($_.Exception.Message)"
+    }
+    $ErrorActionPreference = $prevEAP
+    if ($uvInstallOk) {
+        Write-Ok 'uv 설치 완료'
+    } else {
+        Write-Err 'uv 자동 설치에 실패했습니다.'
         Write-Host '   수동 설치: https://astral.sh/uv/install.ps1'
         Read-Host '   Enter 로 종료'
         exit 1
@@ -136,6 +143,7 @@ if ((Test-Path $claudeMsixDir) -or (Test-Path $claudeAppDataDir)) {
     Write-Host '   Claude Desktop 이 없습니다.'
     Write-Host '   자동 설치를 시도합니다 (winget)...'
     $installed = $false
+    $prevEAP = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
     try {
         winget install --id Anthropic.Claude --silent --accept-package-agreements --accept-source-agreements 2>&1 | Out-Null
         if ((Test-Path $claudeMsixDir) -or (Test-Path $claudeAppDataDir)) {
@@ -145,6 +153,7 @@ if ((Test-Path $claudeMsixDir) -or (Test-Path $claudeAppDataDir)) {
     } catch {
         # winget 에 패키지 없으면 fallback
     }
+    $ErrorActionPreference = $prevEAP
     if (-not $installed) {
         Write-Warn 'winget 자동 설치 실패. 브라우저로 다운로드 페이지를 엽니다.'
         Start-Process 'https://claude.ai/download'
@@ -190,13 +199,23 @@ if (-not (Test-Path $uvPath)) {
 }
 
 Write-Host '   uvx 로 caselaw-mcp 미리 받습니다 (Python 자동 다운로드 포함, 30초~3분)...'
-$installOutput = & $uvPath tool install caselaw-mcp 2>&1
-$installExit = $LASTEXITCODE
+$installExit = -999
+$installOutput = $null
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = 'Continue'  # uv 의 stderr 진행 메시지가 throw 되지 않게
+try {
+    $installOutput = & $uvPath tool install caselaw-mcp 2>&1
+    $installExit = $LASTEXITCODE
+} catch {
+    Write-Warn "tool install 호출 중 예외: $($_.Exception.Message)"
+    $installExit = -1
+}
+$ErrorActionPreference = $prevEAP
+
 if ($installExit -eq 0) {
     Write-Ok 'caselaw-mcp 설치 완료'
 } else {
-    Write-Warn "tool install 비정상 종료 (exit=$installExit). uvx 가 첫 호출 시 자동으로 받으므로 계속 진행합니다."
-    Write-Host "      (참고용 출력: $($installOutput -join ' | ' | Out-String).Trim())" -ForegroundColor DarkGray
+    Write-Warn "tool install 정상 완료 안 됨 (exit=$installExit). uvx 가 첫 호출 시 자동으로 받으므로 계속 진행합니다."
 }
 
 # ─────────────────────────────────────────────
