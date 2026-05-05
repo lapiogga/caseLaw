@@ -1,0 +1,59 @@
+======================================================================
+Test A: search_constitutional_decision('집회', display=3)
+======================================================================
+total=84, count=3
+  [1] keys: ['row_id', 'case_number', 'final_date', 'detc_id', 'case_name', 'detail_url']
+      case_number: 2019헌마605
+      case_name: 2008년 촛불집회 과거사 진상규명 대상 제외 등 위헌확인
+  [2] keys: ['row_id', 'case_number', 'final_date', 'detc_id', 'case_name', 'detail_url']
+      case_number: 2019헌마839
+      case_name: 공공장소 종교집회 확성기사용 미제한 위헌확인
+  [3] keys: ['row_id', 'case_number', 'final_date', 'detc_id', 'case_name', 'detail_url']
+      case_number: 2011헌가29
+      case_name: 구 집회 및 시위에 관한 법률 제10조 등 위헌제청
+
+======================================================================
+Test B: search_law_interpretation('개인정보', display=3)
+======================================================================
+total=50, count=3
+  [1] keys: ['row_id', 'case_name', '법령해석례상세링크', 'responder', 'case_number', 'expc_id', 'responder_code', 'inquirer']
+      case_number: 20-0370
+      case_name: 개인정보보호위원회 - 「감정평가 및 감정평가사에 관한 법률」 제47조제1항에 따른 자료제출 명령을 같은 법 시행령 제49조의 표본조사를 목적으로 할 수 있는지 여부(「감정평가 및 감정평가사에 관한 법률」 제47조제1
+  [2] keys: ['row_id', 'case_name', '법령해석례상세링크', 'responder', 'case_number', 'expc_id', 'responder_code', 'inquirer']
+      case_number: 20-0542
+      case_name: 개인정보보호위원회 - 비상임위원이 겸직하려는 경우 별도의 허가 절차를 거쳐야 하는지 여부(「개인정보 보호법」 제7조의2 등 관련)
+  [3] keys: ['row_id', 'case_name', '법령해석례상세링크', 'responder', 'case_number', 'expc_id', 'responder_code', 'inquirer']
+      case_number: 05-0029
+      case_name: 공공기관의 개인정보보호에 관한 법률 제10조(개인정보) 관련
+
+======================================================================
+Test C: search_admin_judgment('운전면허 취소', display=3)
+======================================================================
+total=2970, count=3
+  [1] keys: ['row_id', '재결청', 'agency', 'case_number', '행정심판례상세링크', 'decision_division_code', 'decc_id', 'decision_date']
+      case_number: 2018경기행심191
+      case_name: 개인택시운송사업면허 및 택시운전자격 취소처분 취소청구
+  [2] keys: ['row_id', '재결청', 'agency', 'case_number', '행정심판례상세링크', 'decision_division_code', 'decc_id', 'decision_date']
+      case_number: 2024-02969
+      case_name: 운전면허시험 원서접수 거부처분 취소청구
+  [3] keys: ['row_id', '재결청', 'agency', 'case_number', '행정심판례상세링크', 'decision_division_code', 'decc_id', 'decision_date']
+      case_number: 2020-03178
+      case_name: 자동차연습운전면허 취소처분 취소청구
+
+======================================================================
+Test D: find_related_precedents (음주운전 첫 판례 → 관련 판례)
+======================================================================
+source prec_id=616247 (2025도15970)
+referenced_text(앞 200자):  대법원 2004. 10. 15. 선고 2004도4869 판결, 대법원 2012. 11. 29. 선고 2012도10269 판결(공2013상, 112), 헌법재판소 2019. 2. 28. 선고 2018헌바8 전원재판부 결정(헌공269, 282)<br/>
+referenced_cases: ['2004도4869', '2012도10269', '2018헌바8']
+candidates count: 8
+  [1] 2023다298892 | 대법원 | 2024.10.08 | src=referenced | prec_id=605165
+  [2] 2021다294902 | 대법원 | 2022.03.31 | src=referenced | prec_id=233013
+  [3] 2012도10269 | 대법원 | 2012.11.29 | src=referenced | prec_id=166962
+  [4] 2019도14338 | 대법원 | 2021.04.29 | src=referenced | prec_id=218361
+  [5] 2023도18308 | 대법원 | 2026.01.29 | src=keyword | prec_id=616237
+  [6] 의정부지방법원-2025-가단-105186 |  | 2026.01.29 | src=keyword | prec_id=617063
+
+======================================================================
+DONE — Phase 2 정상 동작 확인
+======================================================================

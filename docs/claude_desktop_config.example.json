@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "caselaw": {
+      "command": "C:\\Users\\User\\.local\\bin\\uv.exe",
+      "args": [
+        "run",
+        "--directory",
+        "C:\\Users\\User\\CaseLaw",
+        "caselaw-mcp"
+      ]
+    }
+  }
+}

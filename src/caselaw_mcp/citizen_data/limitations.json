@@ -1,0 +1,298 @@
+{
+  "_meta": {
+    "version": "0.5.0",
+    "updated": "2026-05-05",
+    "note": "한국 주요 청구권·고소권 시효 표. 1차 자체 작성. 정식 변호사 검토 권장.",
+    "disclaimer": "시효는 중단·정지 사유로 달라질 수 있습니다. 본 표는 일반 안내이며, 정확한 판단은 변호사 상담 권장."
+  },
+  "interruption_events": [
+    {
+      "name": "재판상 청구",
+      "description": "소 제기·지급명령 신청·조정신청 등으로 시효 중단 (민법 제168조)"
+    },
+    {
+      "name": "압류·가압류·가처분",
+      "description": "민사 보전처분 시 시효 중단"
+    },
+    {
+      "name": "승인",
+      "description": "채무자가 채무를 인정하는 행위 (변제 약속·일부 변제·이자 지급 등)"
+    },
+    {
+      "name": "최고",
+      "description": "내용증명 등으로 청구. 최고 후 6개월 내 재판상 청구 등이 있어야 효력 (민법 제174조)"
+    }
+  ],
+  "limitations": [
+    {
+      "id": "civil.general",
+      "category": "일반 채권 (민사)",
+      "period_years": 10,
+      "law": "민법 제162조 제1항",
+      "examples": ["대여금", "매매대금", "임대차보증금 반환청구"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "civil.short_3y",
+      "category": "3년 단기 채권",
+      "period_years": 3,
+      "law": "민법 제163조",
+      "examples": ["이자·부양료·급료·사용료 등 1년 이내 정기금", "의사·변호사 보수", "수공업자·제조자의 업무 채권"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "civil.short_1y",
+      "category": "1년 단기 채권",
+      "period_years": 1,
+      "law": "민법 제164조",
+      "examples": ["여관·음식점·오락장 숙박료·음식료", "노예·연예인 임금"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "commercial.general",
+      "category": "상사 채권",
+      "period_years": 5,
+      "law": "상법 제64조",
+      "examples": ["회사 간 거래 채권", "B2B 외상값"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "tort",
+      "category": "불법행위 손해배상",
+      "period_years": 3,
+      "alt_period_years": 10,
+      "law": "민법 제766조",
+      "law_detail": "손해 및 가해자를 안 날부터 3년 / 불법행위 시부터 10년",
+      "examples": ["폭행·상해 손해배상", "교통사고 위자료", "사기로 인한 재산상 손해"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "tort_minor_sexual",
+      "category": "미성년자 성폭력 손해배상",
+      "period_years": null,
+      "alt_period_years": null,
+      "law": "민법 제766조 제3항",
+      "law_detail": "미성년자가 성년이 될 때까지 시효 정지",
+      "examples": ["미성년 시절 성폭력 피해"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "unjust_enrichment",
+      "category": "부당이득 반환청구",
+      "period_years": 10,
+      "law": "민법 제741조 + 제162조",
+      "examples": ["과오납·이중지급 반환"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "wage",
+      "category": "임금 채권 (근로자)",
+      "period_years": 3,
+      "law": "근로기준법 제49조",
+      "examples": ["월급·상여금·퇴직금·연차수당"],
+      "interruption_applicable": true,
+      "note": "퇴직금은 퇴직일부터 기산"
+    },
+    {
+      "id": "industrial_accident",
+      "category": "산재 보상금 청구",
+      "period_years": 3,
+      "law": "산업재해보상보험법 제112조",
+      "examples": ["요양·휴업·장해·유족급여"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "medical",
+      "category": "의료사고 손해배상",
+      "period_years": 3,
+      "alt_period_years": 10,
+      "law": "민법 제766조",
+      "examples": ["의료과실 손해배상", "수술 후유증"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "product_liability",
+      "category": "제조물책임",
+      "period_years": 3,
+      "alt_period_years": 10,
+      "law": "제조물책임법 제7조",
+      "law_detail": "손해 및 책임자를 안 날 3년 / 제조물 공급 후 10년",
+      "examples": ["결함 제품 사고", "리콜 대상 피해"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "inheritance.share",
+      "category": "유류분 반환청구",
+      "period_years": 1,
+      "alt_period_years": 10,
+      "law": "민법 제1117조",
+      "law_detail": "반환받을 증여·유증 안 날부터 1년 / 상속개시 시점부터 10년",
+      "examples": ["증여로 인한 유류분 침해"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "family.property_division",
+      "category": "재산분할청구권",
+      "period_years": 2,
+      "law": "민법 제839조의2",
+      "law_detail": "이혼한 날부터 2년",
+      "examples": ["이혼 후 재산분할 미완료"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "family.consolation",
+      "category": "이혼 위자료 청구",
+      "period_years": 3,
+      "law": "민법 제766조",
+      "examples": ["배우자 부정행위·가정폭력 위자료"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "rent.deposit_return",
+      "category": "임대차보증금 반환청구",
+      "period_years": 10,
+      "law": "민법 제162조",
+      "examples": ["전·월세 보증금"],
+      "interruption_applicable": true,
+      "note": "임대차계약 종료 시점부터 기산"
+    },
+    {
+      "id": "rent.repair",
+      "category": "임대인의 수선의무 위반 손해배상",
+      "period_years": 6,
+      "law": "민법 제670조",
+      "law_detail": "하자 종류별 1·5·10년",
+      "examples": ["누수·균열 미수선"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "construction.defect",
+      "category": "공사 하자 책임",
+      "period_years": 5,
+      "alt_period_years": 10,
+      "law": "민법 제670조·공동주택관리법",
+      "law_detail": "하자 종류별 1·2·3·5·10년",
+      "examples": ["아파트 누수·균열·구조결함"],
+      "interruption_applicable": true
+    },
+    {
+      "id": "consumer.warranty",
+      "category": "소비자 환불·교환",
+      "period_years": 0.0833,
+      "law": "전자상거래법",
+      "law_detail": "청약철회 7일 (단순 변심) / 30일 (표시·광고와 다른 경우)",
+      "examples": ["온라인 구매 환불"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "criminal.assault",
+      "category": "폭행·상해 (공소시효)",
+      "period_years": 7,
+      "law": "형사소송법 제249조",
+      "examples": ["일반 폭행·상해"],
+      "interruption_applicable": false,
+      "note": "반의사불벌죄(폭행)는 6개월 내 고소"
+    },
+    {
+      "id": "criminal.fraud",
+      "category": "사기죄 (공소시효)",
+      "period_years": 10,
+      "law": "형사소송법 제249조",
+      "examples": ["일반 사기"],
+      "interruption_applicable": false,
+      "note": "특경법 5억 이상 가중 시 공소시효 더 길어짐"
+    },
+    {
+      "id": "criminal.sexual",
+      "category": "성범죄 (공소시효)",
+      "period_years": 10,
+      "law": "성폭력범죄의 처벌 등에 관한 특례법 제21조",
+      "law_detail": "DNA 등 과학적 증거 시 10년 연장. 13세 미만 피해자 시효 폐지.",
+      "examples": ["강제추행·강간"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "criminal.stalking",
+      "category": "스토킹 (공소시효)",
+      "period_years": 5,
+      "law": "스토킹범죄의 처벌 등에 관한 법률",
+      "examples": ["스토킹범죄"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "criminal.dui",
+      "category": "음주운전 (공소시효)",
+      "period_years": 5,
+      "law": "도로교통법",
+      "examples": ["음주운전 처벌"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "admin.disposition",
+      "category": "행정처분 취소소송 제소기간",
+      "period_years": 0.247,
+      "alt_period_years": 1,
+      "law": "행정소송법 제20조",
+      "law_detail": "처분 안 날부터 90일 / 처분 있은 날부터 1년",
+      "examples": ["면허취소·과태료·세금 부과"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "admin.tax_objection",
+      "category": "세금 이의신청·심판청구",
+      "period_years": 0.247,
+      "law": "국세기본법 제56조",
+      "law_detail": "처분 안 날부터 90일",
+      "examples": ["과세전적부심사 후 이의·심판청구"],
+      "interruption_applicable": false
+    },
+    {
+      "id": "labor.unfair_dismissal",
+      "category": "부당해고 구제신청",
+      "period_years": 0.247,
+      "law": "근로기준법 제28조",
+      "law_detail": "해고 등 부당한 처분이 있은 날부터 3개월",
+      "examples": ["부당해고·부당전직"],
+      "interruption_applicable": false,
+      "note": "기한 매우 짧음 — 즉시 신청 필요"
+    },
+    {
+      "id": "child_support",
+      "category": "양육비 청구권",
+      "period_years": 3,
+      "law": "민법 제163조",
+      "examples": ["과거 양육비"],
+      "interruption_applicable": true,
+      "note": "장래 양육비는 시효 무관"
+    },
+    {
+      "id": "guarantee.surety",
+      "category": "보증채무·연대보증",
+      "period_years": 10,
+      "law": "민법 제162조",
+      "examples": ["연대보증인 책임"],
+      "interruption_applicable": true,
+      "note": "주채무 시효와 별도"
+    },
+    {
+      "id": "defamation",
+      "category": "명예훼손 (공소시효)",
+      "period_years": 5,
+      "law": "형사소송법 제249조",
+      "law_detail": "정보통신망법 명예훼손 7년",
+      "examples": ["악플·허위사실 적시"],
+      "interruption_applicable": false,
+      "note": "민사 손해배상은 별도 (민법 제766조 3년/10년)"
+    },
+    {
+      "id": "copyright.infringement",
+      "category": "저작권 침해 손해배상",
+      "period_years": 3,
+      "alt_period_years": 10,
+      "law": "민법 제766조",
+      "examples": ["무단 사용·표절"],
+      "interruption_applicable": true,
+      "note": "형사 저작권 침해 공소시효는 별도 7년"
+    }
+  ]
+}

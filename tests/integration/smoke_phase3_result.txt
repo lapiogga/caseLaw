@@ -1,0 +1,36 @@
+======================================================================
+Test E: search_committee_decision('공정거래', '담합', display=3)
+======================================================================
+committee=ftc, total=1, count=1
+  [1] keys: ['row_id', 'case_number', 'doc_serial_id', '문서유형', 'decision_number', 'decision_date', 'case_name', '회의종류']
+      case_number: 2009협심0509
+      case_name: 군납유류 입찰담합 관련 과징금 재산정에 대한 현대오일뱅크(주)의 이의신청에 대한 건
+      decision_date: 2009.4.15.
+
+======================================================================
+Test F: search_special_admin_judgment('조세', '양도소득세', display=3)
+======================================================================
+tribunal=specialDeccTt, total=0, count=0
+
+======================================================================
+Test G: search_central_dept_interpretation('법무부', '공탁', display=3)
+======================================================================
+dept=moj, total=0, count=0
+
+======================================================================
+Test H: search_legal_term('공탁', display=3)
+======================================================================
+total=29, count=3
+  [1] keys: ['row_id', 'detail_url', '법령종류코드', 'term_id', 'term_name', 'detail_search_url', 'dict_division_code']
+      term_name: 공탁(공탁 신청 및 성립)
+      term_id: 851917
+  [2] keys: ['row_id', 'detail_url', '법령종류코드', 'term_id', 'term_name', 'detail_search_url', 'dict_division_code']
+      term_name: 공탁(공탁물 지급)
+      term_id: 851918
+  [3] keys: ['row_id', 'detail_url', '법령종류코드', 'term_id', 'term_name', 'detail_search_url', 'dict_division_code']
+      term_name: 공탁(담보공탁)
+      term_id: 851920
+
+======================================================================
+DONE — Phase 3 정상 동작 확인
+======================================================================

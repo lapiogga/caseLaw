@@ -1,0 +1,174 @@
+{
+  "_meta": {
+    "version": "0.7.0",
+    "updated": "2026-05-05",
+    "note": "전국+17개 광역시도+분쟁 유형별 무료/저비용 법률 상담처 디렉토리. 1차 자체 작성. 정기 갱신 권장.",
+    "disclaimer": "전화번호·운영시간은 변동 가능. 방문 전 사전 확인 권장."
+  },
+  "national": [
+    {
+      "name": "대한법률구조공단",
+      "phone": "132",
+      "url": "https://www.klac.or.kr",
+      "scope": "전 국민 무료 상담. 소송 대리는 기준 중위소득 125% 이하.",
+      "domains": ["all"],
+      "free": true
+    },
+    {
+      "name": "한국가정법률상담소",
+      "phone": "1644-7077",
+      "url": "https://lawhome.or.kr",
+      "scope": "가정·여성·임대차 무관 무료 상담.",
+      "domains": ["family", "rent", "consumer", "all"],
+      "free": true
+    },
+    {
+      "name": "양육비이행관리원",
+      "phone": "1644-6621",
+      "url": "https://www.childsupport.or.kr",
+      "scope": "양육비 미지급 추심 무료.",
+      "domains": ["family.child_support"],
+      "free": true
+    },
+    {
+      "name": "여성긴급전화",
+      "phone": "1366",
+      "url": "",
+      "scope": "성폭력·가정폭력·스토킹·디지털성범죄 24시간.",
+      "domains": ["criminal.sexual", "criminal.stalking", "family.divorce"],
+      "free": true,
+      "emergency": true
+    },
+    {
+      "name": "고용노동부",
+      "phone": "1350",
+      "url": "https://www.moel.go.kr",
+      "scope": "임금체불·부당해고·산재·직장 내 괴롭힘 무료 상담.",
+      "domains": ["labor"],
+      "free": true
+    },
+    {
+      "name": "소비자상담센터",
+      "phone": "1372",
+      "url": "https://www.ccn.go.kr",
+      "scope": "소비자 분쟁 무료 상담·조정.",
+      "domains": ["consumer"],
+      "free": true
+    },
+    {
+      "name": "한국소비자원",
+      "phone": "043-880-5500",
+      "url": "https://www.kca.go.kr",
+      "scope": "분쟁조정 무료. 결과 강제력 약하지만 빠름.",
+      "domains": ["consumer", "civil.product_defect"],
+      "free": true
+    },
+    {
+      "name": "신용회복위원회",
+      "phone": "1600-5500",
+      "url": "https://www.ccrs.or.kr",
+      "scope": "개인 채무 조정·개인회생 사전 상담 무료.",
+      "domains": ["civil.bankruptcy"],
+      "free": true
+    },
+    {
+      "name": "의료분쟁조정중재원",
+      "phone": "1670-2545",
+      "url": "https://www.k-medi.or.kr",
+      "scope": "의료사고 조정·중재 (소송 전 권장).",
+      "domains": ["civil.medical"],
+      "free": true,
+      "note": "조정 신청 시 의료기관 동의 필요한 경우 있음."
+    },
+    {
+      "name": "국가인권위원회",
+      "phone": "1331",
+      "url": "https://www.humanrights.go.kr",
+      "scope": "차별·인권침해 진정 (무료, 강제력 한정).",
+      "domains": ["labor.discrimination", "criminal.sexual"],
+      "free": true
+    },
+    {
+      "name": "112 (경찰)",
+      "phone": "112",
+      "url": "",
+      "scope": "긴급 형사 신고. 폭행·스토킹·성폭력 진행 중.",
+      "domains": ["criminal"],
+      "free": true,
+      "emergency": true
+    },
+    {
+      "name": "법률홈닥터 (지자체 무료법률서비스)",
+      "phone": "각 지자체 문의",
+      "url": "https://lawhomedoctor.moj.go.kr",
+      "scope": "지자체 거주자 대상 1:1 무료 법률 상담 (법무부 운영).",
+      "domains": ["all"],
+      "free": true
+    },
+    {
+      "name": "마을변호사 (행정안전부 운영)",
+      "phone": "각 지자체 문의",
+      "url": "https://www.koreanbar.or.kr",
+      "scope": "읍·면·동 단위 변호사 무료 전화상담.",
+      "domains": ["all"],
+      "free": true
+    },
+    {
+      "name": "대한변협 법률구조재단",
+      "phone": "02-3476-6515",
+      "url": "https://www.legalaid.or.kr",
+      "scope": "사회취약계층 무료 법률구조.",
+      "domains": ["all"],
+      "free": true
+    }
+  ],
+  "regional_bar_associations": [
+    {"name": "서울지방변호사회 무료법률상담", "phone": "02-3476-4000", "region": "서울"},
+    {"name": "인천지방변호사회", "phone": "032-865-0009", "region": "인천"},
+    {"name": "경기북부지방변호사회", "phone": "031-877-8400", "region": "경기북부"},
+    {"name": "수원지방변호사회", "phone": "031-211-7800", "region": "경기남부"},
+    {"name": "강원지방변호사회", "phone": "033-256-3600", "region": "강원"},
+    {"name": "충북지방변호사회", "phone": "043-244-1500", "region": "충북"},
+    {"name": "대전지방변호사회", "phone": "042-472-2245", "region": "대전·세종·충남"},
+    {"name": "전북지방변호사회", "phone": "063-274-9500", "region": "전북"},
+    {"name": "광주지방변호사회", "phone": "062-227-2245", "region": "광주·전남"},
+    {"name": "대구지방변호사회", "phone": "053-754-9081", "region": "대구·경북"},
+    {"name": "부산지방변호사회", "phone": "051-505-6105", "region": "부산"},
+    {"name": "울산지방변호사회", "phone": "052-265-7766", "region": "울산"},
+    {"name": "창원지방변호사회", "phone": "055-264-7799", "region": "경남"},
+    {"name": "제주지방변호사회", "phone": "064-755-3838", "region": "제주"}
+  ],
+  "regional_klac_offices": [
+    {"name": "대한법률구조공단 서울중앙지부", "phone": "02-3210-9000", "region": "서울"},
+    {"name": "대한법률구조공단 부산지부", "phone": "051-441-6502", "region": "부산"},
+    {"name": "대한법률구조공단 대구지부", "phone": "053-755-9081", "region": "대구"},
+    {"name": "대한법률구조공단 광주지부", "phone": "062-228-2245", "region": "광주"},
+    {"name": "대한법률구조공단 대전지부", "phone": "042-256-2245", "region": "대전"},
+    {"name": "대한법률구조공단 인천지부", "phone": "032-861-2245", "region": "인천"}
+  ],
+  "domain_specialized": {
+    "labor": [
+      {"name": "노무사 무료상담 (한국공인노무사회)", "phone": "02-6293-6300", "url": "https://www.kcplaa.or.kr"}
+    ],
+    "tax": [
+      {"name": "납세자보호관 (국세청 무료)", "phone": "126", "url": ""},
+      {"name": "한국세무사회 무료상담", "phone": "02-587-3303", "url": ""}
+    ],
+    "immigration": [
+      {"name": "외국인종합안내센터", "phone": "1345", "url": "https://www.hikorea.go.kr"},
+      {"name": "이주여성긴급전화", "phone": "1577-1366", "url": ""}
+    ],
+    "school.bullying": [
+      {"name": "학교폭력 117 (긴급)", "phone": "117", "url": ""},
+      {"name": "푸른나무재단", "phone": "1588-9128", "url": "https://btf.or.kr"}
+    ],
+    "civil.privacy": [
+      {"name": "개인정보침해신고센터", "phone": "118", "url": "https://privacy.go.kr"}
+    ]
+  },
+  "online_self_litigation": [
+    {"name": "대법원 전자소송", "url": "https://ecfs.scourt.go.kr", "scope": "민사·가사·행정 전자소송 (소액심판 셀프 가능)"},
+    {"name": "정부24 - 내용증명", "url": "https://www.gov.kr", "scope": "온라인 내용증명 발송"},
+    {"name": "찾기쉬운 생활법령정보", "url": "https://www.easylaw.go.kr", "scope": "법제처 운영. 주제별 생활 법령 안내."}
+  ]
+}

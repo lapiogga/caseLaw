@@ -1,0 +1,136 @@
+{
+  "_meta": {
+    "version": "0.5.0",
+    "updated": "2026-05-05",
+    "law_basis": "민사소송 등 인지법 + 송달료 규칙",
+    "currency": "KRW",
+    "note": "일반 통상 견적용 — 실제 비용은 사건·법원·변호사에 따라 달라짐.",
+    "disclaimer": "변호사 수임료는 자율이며 본 표는 시장 통상 범위 안내."
+  },
+  "civil_stamp_fee_brackets": [
+    {
+      "max_claim_krw": 10000000,
+      "formula": "claim * 0.005",
+      "description": "1,000만 원 미만"
+    },
+    {
+      "max_claim_krw": 100000000,
+      "formula": "claim * 0.0045 + 5000",
+      "description": "1,000만 ~ 1억 원"
+    },
+    {
+      "max_claim_krw": 1000000000,
+      "formula": "claim * 0.004 + 55000",
+      "description": "1억 ~ 10억 원"
+    },
+    {
+      "max_claim_krw": null,
+      "formula": "claim * 0.0035 + 555000",
+      "description": "10억 원 초과"
+    }
+  ],
+  "service_fee_per_round_krw": 5200,
+  "standard_service_rounds": 7,
+  "small_claim_threshold_krw": 30000000,
+  "lawyer_fee_estimates": {
+    "civil_general": {
+      "low": 3000000,
+      "typical": 5500000,
+      "high": 11000000,
+      "note": "일반 민사 본안소송 1심 평균. 소가에 따라 변동."
+    },
+    "civil_small_claim": {
+      "low": 0,
+      "typical": 0,
+      "high": 1500000,
+      "note": "소액사건심판은 셀프 진행 가능. 변호사 위임 시 200~150만 원 정도."
+    },
+    "criminal_general": {
+      "low": 3000000,
+      "typical": 6000000,
+      "high": 15000000,
+      "note": "형사 1심 변호. 사건 중대성·복잡성 따라 변동."
+    },
+    "criminal_dui": {
+      "low": 1500000,
+      "typical": 3000000,
+      "high": 6000000,
+      "note": "음주운전 등 단순 형사."
+    },
+    "family_divorce": {
+      "low": 2500000,
+      "typical": 5000000,
+      "high": 10000000,
+      "note": "이혼 소송. 재산분할·양육권 다툼 정도에 따라."
+    },
+    "labor_dismissal": {
+      "low": 2000000,
+      "typical": 4000000,
+      "high": 8000000,
+      "note": "부당해고 구제 (지노위 + 행정소송)."
+    },
+    "administrative": {
+      "low": 3000000,
+      "typical": 6000000,
+      "high": 12000000,
+      "note": "행정심판·행정소송."
+    },
+    "real_estate": {
+      "low": 3000000,
+      "typical": 6000000,
+      "high": 15000000,
+      "note": "부동산 매매·임대차 분쟁."
+    },
+    "medical": {
+      "low": 5000000,
+      "typical": 10000000,
+      "high": 25000000,
+      "note": "의료사고 소송. 감정 비용 별도."
+    }
+  },
+  "success_fee_typical_pct": {
+    "min": 5,
+    "max": 20,
+    "note": "성공보수는 자율. 통상 8~15%."
+  },
+  "additional_costs": {
+    "appraisal_typical_krw": "100만 ~ 500만 원 (감정 사건 별도)",
+    "expert_witness_krw": "회당 30만 ~ 200만 원",
+    "document_translation_krw": "장당 1만 ~ 5만 원"
+  },
+  "free_resources": [
+    {
+      "name": "대한법률구조공단",
+      "phone": "132",
+      "scope": "기준 중위소득 125% 이하 (전 국민 무료 상담)"
+    },
+    {
+      "name": "한국가정법률상담소",
+      "phone": "1644-7077",
+      "scope": "가정·여성·임대차 무관"
+    },
+    {
+      "name": "지방변호사회 무료법률상담",
+      "scope": "각 지역 변호사회 (서울 02-3476-4000 등)"
+    },
+    {
+      "name": "지자체 마을변호사·구청 무료상담",
+      "scope": "주소지 관할 구청·시청 홈페이지에서 일정 확인"
+    },
+    {
+      "name": "양육비이행관리원",
+      "phone": "1644-6621",
+      "scope": "양육비 미지급 추심 무료"
+    },
+    {
+      "name": "여성긴급전화",
+      "phone": "1366",
+      "scope": "성폭력·가정폭력·스토킹 24시간"
+    },
+    {
+      "name": "고용노동부",
+      "phone": "1350",
+      "scope": "임금체불·부당해고·산재 무료 상담"
+    }
+  ]
+}

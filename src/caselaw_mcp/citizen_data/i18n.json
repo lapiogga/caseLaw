@@ -1,0 +1,138 @@
+{
+  "_meta": {
+    "version": "0.8.0",
+    "updated": "2026-05-05",
+    "supported_locales": ["ko", "en", "zh", "vi", "ja"],
+    "note": "1차 자체 작성. 정식 번역가·변호사 검토 권장. 베트남어·중국어는 한국 거주 외국인 사용자(외국인 노동자·결혼이민자·유학생) 대상.",
+    "disclaimer": "본 다국어 안내는 일반 법률 정보이며 법률 자문이 아닙니다."
+  },
+  "disclaimers": {
+    "standard": {
+      "ko": "본 정보는 일반 법률 안내이며 법률 자문이 아닙니다. 구체적 사안은 변호사 상담을 권장합니다.",
+      "en": "This information is general legal guidance, not legal advice. For specific matters, please consult a licensed attorney in Korea.",
+      "zh": "本信息为一般法律指引,并非法律咨询。具体事项请咨询韩国注册律师。",
+      "vi": "Thông tin này là hướng dẫn pháp lý chung, không phải tư vấn pháp lý. Đối với các vấn đề cụ thể, vui lòng tham khảo luật sư đã được cấp phép tại Hàn Quốc.",
+      "ja": "本情報は一般的な法律案内であり、法律相談ではありません。具体的な事案は韓国の弁護士にご相談ください。"
+    },
+    "statute_imminent": {
+      "ko": "소멸시효가 임박했거나 만료된 가능성이 있습니다. 즉시 변호사 상담을 권합니다. 시효가 지나면 법적 권리를 행사할 수 없게 됩니다.",
+      "en": "The statute of limitations may be imminent or already expired. Consult a lawyer immediately. Once expired, legal rights cannot be enforced.",
+      "zh": "诉讼时效可能即将到期或已经届满。请立即咨询律师。时效届满后将无法行使法律权利。",
+      "vi": "Thời hiệu khởi kiện có thể sắp hết hoặc đã hết. Vui lòng tham khảo luật sư ngay lập tức. Khi thời hiệu hết, quyền pháp lý không thể được thực thi.",
+      "ja": "消滅時効が間近または既に成立している可能性があります。直ちに弁護士へご相談ください。時効成立後は法的権利の行使ができなくなります。"
+    },
+    "criminal_serious": {
+      "ko": "본 사안은 형사 사건 가능성이 있어 신속한 신고·고소가 중요합니다. 112(긴급) 또는 경찰서 방문, 그리고 변호사 상담을 권합니다.",
+      "en": "This case may involve a criminal matter; prompt reporting or filing a complaint is important. Call 112 (emergency) or visit a police station, and consult a lawyer.",
+      "zh": "本案件可能涉及刑事问题,及时报案或提起告诉很重要。请拨打112(紧急)或前往警察局,并咨询律师。",
+      "vi": "Vụ việc này có thể liên quan đến hình sự; báo cáo hoặc nộp đơn tố cáo kịp thời rất quan trọng. Gọi 112 (khẩn cấp) hoặc đến đồn cảnh sát và tham khảo luật sư.",
+      "ja": "本件は刑事事件の可能性があり、迅速な届出・告訴が重要です。112(緊急)または警察署訪問、そして弁護士相談をお勧めします。"
+    },
+    "ai_limitation": {
+      "ko": "본 안내는 AI가 제공하는 일반 정보로, 개별 사건의 사실관계·증거·관할에 따라 결과가 달라질 수 있습니다.",
+      "en": "This guidance is general information provided by AI; outcomes may vary based on facts, evidence, and jurisdiction of each case.",
+      "zh": "本指引是AI提供的一般信息,具体结果会因每个案件的事实、证据、管辖权而有所不同。",
+      "vi": "Hướng dẫn này là thông tin chung do AI cung cấp; kết quả có thể khác nhau tùy theo sự kiện, bằng chứng và thẩm quyền của từng vụ việc.",
+      "ja": "本案内はAIが提供する一般情報であり、個別事件の事実関係・証拠・管轄により結果が異なる場合があります。"
+    },
+    "victim_support_needed": {
+      "ko": "피해 회복을 위한 전문 지원이 필요할 수 있습니다. 무료 상담처를 함께 안내합니다.",
+      "en": "Specialized support may be needed for recovery. We also provide free counseling resources.",
+      "zh": "您可能需要专业支持以恢复。我们也提供免费咨询资源。",
+      "vi": "Có thể cần hỗ trợ chuyên biệt để phục hồi. Chúng tôi cũng cung cấp nguồn tư vấn miễn phí.",
+      "ja": "被害回復のため専門支援が必要な場合があります。無料相談先もご案内します。"
+    },
+    "data_freshness": {
+      "ko": "법령·판례 데이터는 법제처 OPEN API 기준이며, 최근 개정 사항이 반영되지 않을 수 있습니다.",
+      "en": "Statute and case law data are based on the Korea Ministry of Government Legislation OPEN API; recent amendments may not be reflected.",
+      "zh": "法令·判例数据基于韩国法制处OPEN API,最新修订可能未反映。",
+      "vi": "Dữ liệu pháp luật và án lệ dựa trên OPEN API của Bộ Lập pháp Hàn Quốc; các sửa đổi gần đây có thể chưa được phản ánh.",
+      "ja": "法令・判例データは韓国法制処OPEN API基準であり、最近の改正が反映されていない場合があります。"
+    }
+  },
+  "labels": {
+    "domains": {
+      "민사": {"en": "Civil", "zh": "民事", "vi": "Dân sự", "ja": "民事"},
+      "형사": {"en": "Criminal", "zh": "刑事", "vi": "Hình sự", "ja": "刑事"},
+      "노동": {"en": "Labor", "zh": "劳动", "vi": "Lao động", "ja": "労働"},
+      "가사": {"en": "Family", "zh": "家事", "vi": "Hôn nhân & gia đình", "ja": "家事"},
+      "행정": {"en": "Administrative", "zh": "行政", "vi": "Hành chính", "ja": "行政"},
+      "민사·형사": {"en": "Civil/Criminal", "zh": "民事·刑事", "vi": "Dân sự/Hình sự", "ja": "民事・刑事"},
+      "민사·행정": {"en": "Civil/Administrative", "zh": "民事·行政", "vi": "Dân sự/Hành chính", "ja": "民事・行政"},
+      "민사·형사·행정": {"en": "Civil/Criminal/Administrative", "zh": "民事·刑事·行政", "vi": "Dân sự/Hình sự/Hành chính", "ja": "民事・刑事・行政"}
+    },
+    "status": {
+      "safe": {"ko": "안전", "en": "Safe", "zh": "安全", "vi": "An toàn", "ja": "安全"},
+      "warning": {"ko": "주의", "en": "Warning", "zh": "注意", "vi": "Cảnh báo", "ja": "注意"},
+      "imminent": {"ko": "임박", "en": "Imminent", "zh": "即将到期", "vi": "Sắp hết hạn", "ja": "間近"},
+      "expired": {"ko": "만료", "en": "Expired", "zh": "已届满", "vi": "Đã hết hạn", "ja": "成立"},
+      "indefinite": {"ko": "별도 규정", "en": "Indefinite", "zh": "另有规定", "vi": "Không xác định", "ja": "別途規定"}
+    },
+    "complexity": {
+      "very_low": {"ko": "매우 낮음", "en": "Very Low", "zh": "非常低", "vi": "Rất thấp", "ja": "非常に低い"},
+      "low": {"ko": "낮음", "en": "Low", "zh": "低", "vi": "Thấp", "ja": "低い"},
+      "medium": {"ko": "중간", "en": "Medium", "zh": "中等", "vi": "Trung bình", "ja": "中"},
+      "high": {"ko": "높음", "en": "High", "zh": "高", "vi": "Cao", "ja": "高い"},
+      "very_high": {"ko": "매우 높음", "en": "Very High", "zh": "非常高", "vi": "Rất cao", "ja": "非常に高い"}
+    },
+    "ui": {
+      "case_summary": {"ko": "사건 요약", "en": "Case Summary", "zh": "案件摘要", "vi": "Tóm tắt vụ việc", "ja": "事件概要"},
+      "applicable_laws": {"ko": "적용 가능 법률", "en": "Applicable Laws", "zh": "适用法律", "vi": "Luật áp dụng", "ja": "適用法律"},
+      "limitation": {"ko": "소멸시효", "en": "Statute of Limitations", "zh": "诉讼时效", "vi": "Thời hiệu khởi kiện", "ja": "消滅時効"},
+      "evidence": {"ko": "증거", "en": "Evidence", "zh": "证据", "vi": "Bằng chứng", "ja": "証拠"},
+      "lawyer_consultation": {"ko": "변호사 상담", "en": "Lawyer Consultation", "zh": "律师咨询", "vi": "Tư vấn luật sư", "ja": "弁護士相談"},
+      "free_resources": {"ko": "무료 상담처", "en": "Free Legal Resources", "zh": "免费法律资源", "vi": "Tư vấn pháp lý miễn phí", "ja": "無料相談先"},
+      "next_steps": {"ko": "다음 단계", "en": "Next Steps", "zh": "下一步", "vi": "Các bước tiếp theo", "ja": "次のステップ"}
+    }
+  },
+  "foreigner_resources": [
+    {
+      "name": {
+        "ko": "외국인종합안내센터",
+        "en": "Foreigner Comprehensive Information Center",
+        "zh": "外国人综合咨询中心",
+        "vi": "Trung tâm Thông tin Tổng hợp cho Người nước ngoài",
+        "ja": "外国人総合案内センター"
+      },
+      "phone": "1345",
+      "languages": ["ko", "en", "zh", "vi", "ja", "th", "mn", "id", "ru", "uz"],
+      "scope": "이민·체류·국적·일반 행정 안내 (다국어)"
+    },
+    {
+      "name": {
+        "ko": "이주여성긴급전화",
+        "en": "Migrant Women Emergency Hotline",
+        "zh": "迁移女性紧急电话",
+        "vi": "Đường dây nóng khẩn cấp cho phụ nữ di cư",
+        "ja": "移住女性緊急電話"
+      },
+      "phone": "1577-1366",
+      "languages": ["ko", "en", "zh", "vi", "ja", "ru", "ph", "mn", "th", "uz", "kh", "ne"],
+      "scope": "결혼이민자·이주여성 가정폭력·성폭력 24시간"
+    },
+    {
+      "name": {
+        "ko": "다누리콜센터 (다문화가족지원)",
+        "en": "Danuri Call Center (Multicultural Family Support)",
+        "zh": "Danuri呼叫中心(多元文化家庭支援)",
+        "vi": "Tổng đài Danuri (Hỗ trợ gia đình đa văn hóa)",
+        "ja": "ダヌリコールセンター(多文化家族支援)"
+      },
+      "phone": "1577-5432",
+      "languages": ["ko", "en", "zh", "vi", "ja", "tl", "th", "km", "mn", "ru", "uz", "ne", "ar"],
+      "scope": "다문화가족 생활·법률·심리 종합 상담 (13개 언어 24시간)"
+    },
+    {
+      "name": {
+        "ko": "외국인 노동자 무료법률상담 (한국이주민건강협회)",
+        "en": "Free Legal Consultation for Migrant Workers (Korea Migrant Health Association)",
+        "zh": "外国劳工免费法律咨询(韩国移住民健康协会)",
+        "vi": "Tư vấn pháp lý miễn phí cho người lao động nước ngoài",
+        "ja": "外国人労働者無料法律相談"
+      },
+      "phone": "02-3147-0083",
+      "languages": ["ko", "en", "vi", "th", "km", "ne"],
+      "scope": "노동·체류·임금체불 무료상담"
+    }
+  ]
+}

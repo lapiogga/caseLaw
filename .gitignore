@@ -1,0 +1,91 @@
+# ────────────────────────────────────────
+# 시크릿 (절대 커밋 금지 — 글로벌 규칙)
+# ────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ────────────────────────────────────────
+# Python
+# ────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# uv
+.venv/
+venv/
+ENV/
+
+# Test / Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# Ruff / mypy
+.ruff_cache/
+.mypy_cache/
+
+# ────────────────────────────────────────
+# IDE
+# ────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ────────────────────────────────────────
+# 프로젝트 런타임 산출물
+# ────────────────────────────────────────
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+.cache/
+logs/
+*.log
+
+# 캐시 디렉토리 (사용자 홈 외 로컬 테스트)
+.caselaw_mcp/
+
+# ────────────────────────────────────────
+# 개발자 로컬 자료 (공개 부적절)
+# ────────────────────────────────────────
+# 화면 캡처 (디버깅용 개인 스크린샷)
+*.png
+*.jpg
+*.jpeg
+
+# 외부 가이드 원본 (저작권 불명확)
+reference/
+
+# 내부 계획 폴더 (작업 메모)
+.planning/
