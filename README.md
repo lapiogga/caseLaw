@@ -20,6 +20,10 @@
 
 > Python·JSON·터미널 전혀 몰라도 됩니다. 클릭만 하면 됩니다.
 
+**📷 모든 단계 스크린샷 포함 시각 가이드**: [docs/설치_시각가이드.md](docs/설치_시각가이드.md)
+
+요약:
+
 1. **설치 패키지 다운로드** (7KB):
    <https://github.com/lapiogga/caseLaw/releases/download/v0.8.0/CaseLaw-installer-v0.8.0.zip>
 2. 압축 풀고 **`설치하기.bat` 더블클릭**
@@ -34,7 +38,9 @@
 - caselaw-mcp 패키지 PyPI 에서 다운로드
 - Claude Desktop 설정 파일 자동 작성 (기존 설정 보존·백업)
 
-OC 키 발급 절차 (9단계): [docs/OC발급_가이드.md](docs/OC발급_가이드.md)
+참고 문서:
+- [docs/설치_시각가이드.md](docs/설치_시각가이드.md) — 화면 캡처가 들어간 완전 가이드 (가장 친절)
+- [docs/OC발급_가이드.md](docs/OC발급_가이드.md) — OC 키 발급 9단계
 
 ---
 
