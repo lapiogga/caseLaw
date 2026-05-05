@@ -16,7 +16,27 @@
 
 ---
 
-## 빠른 시작 (다른 사람이 본 MCP 를 설치할 때)
+## 빠른 시작 — 컴퓨터 잘 모르시는 분 (가장 쉬움)
+
+> Python·JSON·터미널 전혀 몰라도 됩니다. 클릭만 하면 됩니다.
+
+1. **OC 키 발급** (5분): [docs/OC발급_가이드.md](docs/OC발급_가이드.md) 참고 — 무료, 9단계 안내
+2. **본 레포 우측 초록색 `Code` 버튼 → `Download ZIP`** → 압축 해제
+3. **압축 푼 폴더의 `scripts/설치하기.bat` 더블클릭**
+4. 화면에 나오는 대로 OC 키 붙여넣기 → Enter
+5. 3-7분 자동 설치 완료. Claude Desktop 켜고 채팅창에:
+   ```
+   caselaw 로 ping 해줘
+   ```
+
+설치 스크립트가 자동으로 처리하는 것:
+- Python·uv·Claude Desktop 자동 설치 (winget)
+- caselaw-mcp 패키지 PyPI 에서 다운로드
+- Claude Desktop 설정 파일 자동 작성 (기존 설정 보존·백업)
+
+---
+
+## 빠른 시작 — 개발자 / 기술자
 
 ### 사전 준비
 

@@ -1,4 +1,4 @@
-# Claude Desktop (MSIX 컨테이너) 의 진짜 config 에 caselaw MCP 서버 등록.
+﻿# Claude Desktop (MSIX 컨테이너) 의 진짜 config 에 caselaw MCP 서버 등록.
 # 기존 preferences 등 보존. 어떤 사용자/경로에서도 작동하도록 동적 경로 사용.
 #
 # Usage:
