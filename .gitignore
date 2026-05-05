@@ -83,9 +83,17 @@ logs/
 *.png
 *.jpg
 *.jpeg
+# 단, docs/promo/ 아래 자료 이미지·GIF·동영상은 README 노출용이므로 추적
+!docs/promo/**/*.png
+!docs/promo/**/*.jpg
+!docs/promo/**/*.jpeg
+!docs/promo/**/*.gif
 
 # 외부 가이드 원본 (저작권 불명확)
 reference/
 
 # 내부 계획 폴더 (작업 메모)
 .planning/
+
+# Playwright 자동화용 격리 venv
+docs/promo/automation/.venv-pw/
