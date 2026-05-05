@@ -83,11 +83,13 @@ logs/
 *.png
 *.jpg
 *.jpeg
-# 단, docs/promo/ 아래 자료 이미지·GIF·동영상은 README 노출용이므로 추적
+# 단, docs/promo/ 아래 자료 이미지·GIF는 README 노출용이므로 추적
 !docs/promo/**/*.png
 !docs/promo/**/*.jpg
 !docs/promo/**/*.jpeg
 !docs/promo/**/*.gif
+# 영상 파일은 용량이 크므로 git 추적 X (YouTube에 업로드 후 URL만 README 임베드)
+docs/promo/videos/
 
 # 외부 가이드 원본 (저작권 불명확)
 reference/
