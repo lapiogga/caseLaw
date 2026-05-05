@@ -20,11 +20,11 @@
 
 > Python·JSON·터미널 전혀 몰라도 됩니다. 클릭만 하면 됩니다.
 
-1. **OC 키 발급** (5분): [docs/OC발급_가이드.md](docs/OC발급_가이드.md) 참고 — 무료, 9단계 안내
-2. **본 레포 우측 초록색 `Code` 버튼 → `Download ZIP`** → 압축 해제
-3. **압축 푼 폴더의 `scripts/설치하기.bat` 더블클릭**
-4. 화면에 나오는 대로 OC 키 붙여넣기 → Enter
-5. 3-7분 자동 설치 완료. Claude Desktop 켜고 채팅창에:
+1. **설치 패키지 다운로드** (7KB):
+   <https://github.com/lapiogga/caseLaw/releases/download/v0.8.0/CaseLaw-installer-v0.8.0.zip>
+2. 압축 풀고 **`설치하기.bat` 더블클릭**
+3. 화면 안내대로 진행 (OC 키 없으면 발급 사이트가 자동으로 열립니다)
+4. 3-7분 자동 설치 후 Claude Desktop 켜고 채팅창에:
    ```
    caselaw 로 ping 해줘
    ```
@@ -33,6 +33,8 @@
 - Python·uv·Claude Desktop 자동 설치 (winget)
 - caselaw-mcp 패키지 PyPI 에서 다운로드
 - Claude Desktop 설정 파일 자동 작성 (기존 설정 보존·백업)
+
+OC 키 발급 절차 (9단계): [docs/OC발급_가이드.md](docs/OC발급_가이드.md)
 
 ---
 
