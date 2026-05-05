@@ -189,12 +189,14 @@ if (-not (Test-Path $uvPath)) {
     exit 1
 }
 
-Write-Host '   uvx 로 caselaw-mcp 미리 받습니다 (30-60초)...'
-try {
-    & $uvPath tool install caselaw-mcp 2>&1 | Out-Null
+Write-Host '   uvx 로 caselaw-mcp 미리 받습니다 (Python 자동 다운로드 포함, 30초~3분)...'
+$installOutput = & $uvPath tool install caselaw-mcp 2>&1
+$installExit = $LASTEXITCODE
+if ($installExit -eq 0) {
     Write-Ok 'caselaw-mcp 설치 완료'
-} catch {
-    Write-Warn "tool install 실패하지만 uvx 로도 작동합니다 (첫 호출 시 자동 받음): $_"
+} else {
+    Write-Warn "tool install 비정상 종료 (exit=$installExit). uvx 가 첫 호출 시 자동으로 받으므로 계속 진행합니다."
+    Write-Host "      (참고용 출력: $($installOutput -join ' | ' | Out-String).Trim())" -ForegroundColor DarkGray
 }
 
 # ─────────────────────────────────────────────
@@ -209,29 +211,72 @@ if (Test-Path $configPath) {
     $backup = "$configPath.backup-$(Get-Date -Format yyyyMMdd-HHmmss)"
     Copy-Item $configPath $backup
     Write-Ok "기존 설정 백업: $backup"
-    $rawJson = Get-Content $configPath -Raw
+    $rawJson = Get-Content $configPath -Raw -Encoding UTF8
     if ([string]::IsNullOrWhiteSpace($rawJson)) { $rawJson = '{}' }
 } else {
     $rawJson = '{}'
 }
 
-$cur = $rawJson | ConvertFrom-Json
+# 기존 config 안전 파싱 (실패해도 진행)
+$cur = $null
+try {
+    $cur = $rawJson | ConvertFrom-Json -ErrorAction Stop
+} catch {
+    Write-Warn "기존 config 파싱 실패 → 새로 작성: $($_.Exception.Message)"
+    $cur = $null
+}
 
-$caselawEntry = @{
+# PSCustomObject -> ordered Hashtable 변환 (빈 PSCustomObject 의 Add-Member 이슈 회피)
+function _ToHashtable {
+    param($obj)
+    if ($null -eq $obj) { return [ordered]@{} }
+    if ($obj -is [PSCustomObject]) {
+        $ht = [ordered]@{}
+        foreach ($p in $obj.PSObject.Properties) { $ht[$p.Name] = _ToHashtable $p.Value }
+        return $ht
+    }
+    if ($obj -is [System.Collections.IDictionary]) {
+        $ht = [ordered]@{}
+        foreach ($k in $obj.Keys) { $ht[$k] = _ToHashtable $obj[$k] }
+        return $ht
+    }
+    if ($obj -is [System.Array]) {
+        return @($obj | ForEach-Object { _ToHashtable $_ })
+    }
+    return $obj
+}
+
+$config = _ToHashtable $cur
+if ($config -isnot [System.Collections.IDictionary]) { $config = [ordered]@{} }
+if (-not $config.Contains('mcpServers') -or $config['mcpServers'] -isnot [System.Collections.IDictionary]) {
+    $config['mcpServers'] = [ordered]@{}
+}
+
+# caselaw 항목을 직접 키 할당 (Add-Member 안 씀)
+$config['mcpServers']['caselaw'] = [ordered]@{
     command = 'uvx'
     args    = @('caselaw-mcp')
-    env     = @{ CASELAW_OC = $ocKey }
+    env     = [ordered]@{ CASELAW_OC = $ocKey }
 }
 
-if (-not ($cur.PSObject.Properties.Name -contains 'mcpServers')) {
-    $cur | Add-Member -NotePropertyName mcpServers -NotePropertyValue (@{}) -Force
-}
-$cur.mcpServers | Add-Member -NotePropertyName caselaw -NotePropertyValue $caselawEntry -Force
-
-$jsonOut = $cur | ConvertTo-Json -Depth 10
+$jsonOut = $config | ConvertTo-Json -Depth 10
 [System.IO.File]::WriteAllText($configPath, $jsonOut, [System.Text.UTF8Encoding]::new($false))
 
-Write-Ok "설정 파일 작성 완료: $configPath"
+Write-Ok "설정 파일 작성: $configPath"
+
+# 검증 — 작성한 파일을 다시 읽어 caselaw 가 진짜 등록됐는지 확인
+try {
+    $verify = Get-Content $configPath -Raw -Encoding UTF8 | ConvertFrom-Json -ErrorAction Stop
+    if ($verify.mcpServers.caselaw.command -eq 'uvx') {
+        Write-Ok '검증: mcpServers.caselaw 정상 등록 확인'
+    } else {
+        Write-Err '검증 실패! caselaw 항목이 누락됐습니다. 메모장으로 직접 추가해주세요.'
+        Write-Host '   생성된 파일 내용:' -ForegroundColor DarkGray
+        Get-Content $configPath -Raw
+    }
+} catch {
+    Write-Err "검증 중 오류: $($_.Exception.Message)"
+}
 
 # ─────────────────────────────────────────────
 # 5. 마무리 안내
