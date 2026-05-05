@@ -61,10 +61,7 @@ async def analyze_precedent_trend(
         if key:
             counter[key] += 1
 
-    distribution = [
-        {"key": k, "count": c}
-        for k, c in counter.most_common()
-    ]
+    distribution = [{"key": k, "count": c} for k, c in counter.most_common()]
     return {
         "query": query,
         "group_by": group_by,
@@ -195,16 +192,18 @@ async def compare_precedents(prec_ids: list[str | int]) -> dict[str, Any]:
         except Exception as e:
             rows.append({"prec_id": str(pid), "error": str(e)})
             continue
-        rows.append({
-            "prec_id": str(pid),
-            "case_number": d.get("case_number"),
-            "court": d.get("court"),
-            "judgment_date": d.get("judgment_date"),
-            "case_name": d.get("case_name"),
-            "holdings": _truncate(d.get("holdings"), 500),
-            "summary": _truncate(d.get("summary"), 800),
-            "referenced_articles": _truncate(d.get("referenced_articles"), 300),
-        })
+        rows.append(
+            {
+                "prec_id": str(pid),
+                "case_number": d.get("case_number"),
+                "court": d.get("court"),
+                "judgment_date": d.get("judgment_date"),
+                "case_name": d.get("case_name"),
+                "holdings": _truncate(d.get("holdings"), 500),
+                "summary": _truncate(d.get("summary"), 800),
+                "referenced_articles": _truncate(d.get("referenced_articles"), 300),
+            }
+        )
     return {"count": len(rows), "rows": rows}
 
 

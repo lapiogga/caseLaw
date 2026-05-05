@@ -63,12 +63,11 @@ def isolated_mode(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """get_settings().cache_path 를 tmp_path로 격리해 mode.json 충돌 방지."""
     from caselaw_mcp import config as cfg
 
-    fake = cfg.Settings(
-        oc="test_oc", cache_path=tmp_path / "cache.db"
-    )
+    fake = cfg.Settings(oc="test_oc", cache_path=tmp_path / "cache.db")
     monkeypatch.setattr(cfg, "get_settings", lambda: fake)
     # mode 모듈도 같은 get_settings 를 import 해서 사용
     import caselaw_mcp.tools.citizen.mode as m
+
     monkeypatch.setattr(m, "get_settings", lambda: fake)
     return tmp_path
 
@@ -131,9 +130,7 @@ def test_triage_unpaid_wage() -> None:
 
 
 def test_triage_with_event_date_safe() -> None:
-    r = triage.triage_dispute(
-        "친구한테 돈 빌려줬는데 안 갚음", event_date="2024-01-15"
-    )
+    r = triage.triage_dispute("친구한테 돈 빌려줬는데 안 갚음", event_date="2024-01-15")
     primary = r["candidates"][0]
     assert "안전" in primary.get("limitation_status", "")
 

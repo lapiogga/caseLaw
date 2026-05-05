@@ -15,9 +15,11 @@ from caselaw_mcp.tools.citizen.disclaimer import attach
 
 @lru_cache(maxsize=1)
 def _load() -> dict[str, Any]:
-    text = resources.files("caselaw_mcp.citizen_data").joinpath(
-        "pro_bono.json"
-    ).read_text(encoding="utf-8")
+    text = (
+        resources.files("caselaw_mcp.citizen_data")
+        .joinpath("pro_bono.json")
+        .read_text(encoding="utf-8")
+    )
     return json.loads(text)
 
 
@@ -105,7 +107,13 @@ def recommend_pro_bono(
     # 4. 온라인 셀프 소송 (항상 포함)
     online = data.get("online_self_litigation", []) if not include_emergency_only else []
 
-    total = len(national) + len(regional_bar) + len(regional_klac) + len(domain_specialized) + len(emergency)
+    total = (
+        len(national)
+        + len(regional_bar)
+        + len(regional_klac)
+        + len(domain_specialized)
+        + len(emergency)
+    )
 
     return attach(
         {

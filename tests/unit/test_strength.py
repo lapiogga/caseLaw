@@ -54,16 +54,41 @@ async def test_evaluate_with_mock_results(monkeypatch: pytest.MonkeyPatch) -> No
     import caselaw_mcp.tools.citizen.strength as s
 
     fake_items = [
-        {"case_name": "A 청구 인용", "case_number": "2024다1", "court": "대법원",
-         "judgment_date": "20240101", "prec_id": "1"},
-        {"case_name": "B 청구 인용", "case_number": "2024다2", "court": "대법원",
-         "judgment_date": "20240201", "prec_id": "2"},
-        {"case_name": "C 일부 인용", "case_number": "2024다3", "court": "고등법원",
-         "judgment_date": "20240301", "prec_id": "3"},
-        {"case_name": "D 청구 기각", "case_number": "2024다4", "court": "지방법원",
-         "judgment_date": "20240401", "prec_id": "4"},
-        {"case_name": "E 일반 사건명 결과 모름", "case_number": "2024다5",
-         "court": "지방법원", "judgment_date": "20240501", "prec_id": "5"},
+        {
+            "case_name": "A 청구 인용",
+            "case_number": "2024다1",
+            "court": "대법원",
+            "judgment_date": "20240101",
+            "prec_id": "1",
+        },
+        {
+            "case_name": "B 청구 인용",
+            "case_number": "2024다2",
+            "court": "대법원",
+            "judgment_date": "20240201",
+            "prec_id": "2",
+        },
+        {
+            "case_name": "C 일부 인용",
+            "case_number": "2024다3",
+            "court": "고등법원",
+            "judgment_date": "20240301",
+            "prec_id": "3",
+        },
+        {
+            "case_name": "D 청구 기각",
+            "case_number": "2024다4",
+            "court": "지방법원",
+            "judgment_date": "20240401",
+            "prec_id": "4",
+        },
+        {
+            "case_name": "E 일반 사건명 결과 모름",
+            "case_number": "2024다5",
+            "court": "지방법원",
+            "judgment_date": "20240501",
+            "prec_id": "5",
+        },
     ]
 
     async def fake_search(*args: Any, **kwargs: Any) -> dict[str, Any]:
@@ -118,6 +143,7 @@ async def test_evaluate_sample_size_clamped() -> None:
         return {"items": [], "total_count": 0}
 
     import pytest as _pt
+
     mp = _pt.MonkeyPatch()
     try:
         mp.setattr(s, "search_precedent", fake_search)

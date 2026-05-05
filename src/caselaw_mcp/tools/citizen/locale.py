@@ -24,8 +24,10 @@ def _state_path() -> Path:
 
 @lru_cache(maxsize=1)
 def _load() -> dict[str, Any]:
-    text = resources.files("caselaw_mcp.citizen_data").joinpath("i18n.json").read_text(
-        encoding="utf-8"
+    text = (
+        resources.files("caselaw_mcp.citizen_data")
+        .joinpath("i18n.json")
+        .read_text(encoding="utf-8")
     )
     return json.loads(text)
 
@@ -54,9 +56,7 @@ def set_user_locale(locale: str) -> dict[str, str]:
         locale: 'ko' | 'en' | 'zh' | 'vi' | 'ja'
     """
     if locale not in SUPPORTED_LOCALES:
-        raise ValueError(
-            f"locale must be one of {SUPPORTED_LOCALES}, got {locale!r}"
-        )
+        raise ValueError(f"locale must be one of {SUPPORTED_LOCALES}, got {locale!r}")
     p = _state_path()
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps({"locale": locale}, ensure_ascii=False), encoding="utf-8")
@@ -143,12 +143,14 @@ def get_foreigner_resources(locale: str | None = None) -> dict[str, Any]:
     out = []
     for entry in _load().get("foreigner_resources", []):
         name = entry["name"].get(locale) or entry["name"][DEFAULT_LOCALE]
-        out.append({
-            "name": name,
-            "phone": entry["phone"],
-            "supported_languages": entry["languages"],
-            "scope": entry["scope"],
-        })
+        out.append(
+            {
+                "name": name,
+                "phone": entry["phone"],
+                "supported_languages": entry["languages"],
+                "scope": entry["scope"],
+            }
+        )
     return {
         "locale": locale,
         "items": out,

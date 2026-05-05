@@ -12,6 +12,7 @@ from caselaw_mcp.tools.citizen import locale as loc
 @pytest.fixture
 def isolated(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     from caselaw_mcp import config as cfg
+
     fake = cfg.Settings(oc="x", cache_path=tmp_path / "c.db")
     monkeypatch.setattr(cfg, "get_settings", lambda: fake)
     monkeypatch.setattr(loc, "get_settings", lambda: fake)

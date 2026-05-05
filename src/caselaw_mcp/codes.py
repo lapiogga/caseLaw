@@ -195,75 +195,96 @@ def resolve_special_tribunal(value: str) -> str | None:
 # (key=영문 약어, value=API target 의 일부 — list/info 분기는 호출부에서)
 # ─────────────────────────────────────────────
 CENTRAL_DEPT: Final[dict[str, str]] = {
-    "moel": "Moel",      # 고용노동부
-    "molit": "Molit",    # 국토교통부
-    "moef": "Moef",      # 재정경제부 (목록만)
-    "mof": "Mof",        # 해양수산부
-    "mois": "Mois",      # 행정안전부
-    "me": "Me",          # 기후에너지환경부
-    "kcs": "Kcs",        # 관세청
-    "nts": "Nts",        # 국세청 (목록만)
-    "moe": "Moe",        # 교육부
-    "msit": "Msit",      # 과학기술정보통신부
-    "mpva": "Mpva",      # 국가보훈부
-    "mnd": "Mnd",        # 국방부
-    "mafra": "Mafra",    # 농림축산식품부
-    "mcst": "Mcst",      # 문화체육관광부
-    "moj": "Moj",        # 법무부
-    "mohw": "Mohw",      # 보건복지부
-    "motie": "Motie",    # 산업통상부
-    "mogef": "Mogef",    # 성평등가족부
-    "mofa": "Mofa",      # 외교부
-    "mss": "Mss",        # 중소벤처기업부
-    "mou": "Mou",        # 통일부
-    "moleg": "Moleg",    # 법제처
-    "mfds": "Mfds",      # 식품의약품안전처
-    "mpm": "Mpm",        # 인사혁신처
-    "kma": "Kma",        # 기상청
-    "khs": "Khs",        # 국가유산청
-    "rda": "Rda",        # 농촌진흥청
-    "npa": "Npa",        # 경찰청
-    "dapa": "Dapa",      # 방위사업청
-    "mma": "Mma",        # 병무청
-    "kfs": "Kfs",        # 산림청
-    "nfa": "Nfa",        # 소방청
-    "oka": "Oka",        # 재외동포청
-    "pps": "Pps",        # 조달청
-    "kdca": "Kdca",      # 질병관리청
+    "moel": "Moel",  # 고용노동부
+    "molit": "Molit",  # 국토교통부
+    "moef": "Moef",  # 재정경제부 (목록만)
+    "mof": "Mof",  # 해양수산부
+    "mois": "Mois",  # 행정안전부
+    "me": "Me",  # 기후에너지환경부
+    "kcs": "Kcs",  # 관세청
+    "nts": "Nts",  # 국세청 (목록만)
+    "moe": "Moe",  # 교육부
+    "msit": "Msit",  # 과학기술정보통신부
+    "mpva": "Mpva",  # 국가보훈부
+    "mnd": "Mnd",  # 국방부
+    "mafra": "Mafra",  # 농림축산식품부
+    "mcst": "Mcst",  # 문화체육관광부
+    "moj": "Moj",  # 법무부
+    "mohw": "Mohw",  # 보건복지부
+    "motie": "Motie",  # 산업통상부
+    "mogef": "Mogef",  # 성평등가족부
+    "mofa": "Mofa",  # 외교부
+    "mss": "Mss",  # 중소벤처기업부
+    "mou": "Mou",  # 통일부
+    "moleg": "Moleg",  # 법제처
+    "mfds": "Mfds",  # 식품의약품안전처
+    "mpm": "Mpm",  # 인사혁신처
+    "kma": "Kma",  # 기상청
+    "khs": "Khs",  # 국가유산청
+    "rda": "Rda",  # 농촌진흥청
+    "npa": "Npa",  # 경찰청
+    "dapa": "Dapa",  # 방위사업청
+    "mma": "Mma",  # 병무청
+    "kfs": "Kfs",  # 산림청
+    "nfa": "Nfa",  # 소방청
+    "oka": "Oka",  # 재외동포청
+    "pps": "Pps",  # 조달청
+    "kdca": "Kdca",  # 질병관리청
     "kostat": "Kostat",  # 국가데이터처
-    "kipo": "Kipo",      # 지식재산처
-    "kcg": "Kcg",        # 해양경찰청
-    "naacc": "Naacc",    # 행정중심복합도시건설청
+    "kipo": "Kipo",  # 지식재산처
+    "kcg": "Kcg",  # 해양경찰청
+    "naacc": "Naacc",  # 행정중심복합도시건설청
 }
 
 CENTRAL_DEPT_ALIASES: Final[dict[str, str]] = {
-    "고용노동부": "moel", "고용노동": "moel", "노동부": "moel",
-    "국토교통부": "molit", "국토부": "molit", "국토": "molit",
-    "재정경제부": "moef", "재경부": "moef",
-    "해양수산부": "mof", "해수부": "mof",
-    "행정안전부": "mois", "행안부": "mois",
-    "기후에너지환경부": "me", "환경부": "me",
+    "고용노동부": "moel",
+    "고용노동": "moel",
+    "노동부": "moel",
+    "국토교통부": "molit",
+    "국토부": "molit",
+    "국토": "molit",
+    "재정경제부": "moef",
+    "재경부": "moef",
+    "해양수산부": "mof",
+    "해수부": "mof",
+    "행정안전부": "mois",
+    "행안부": "mois",
+    "기후에너지환경부": "me",
+    "환경부": "me",
     "관세청": "kcs",
     "국세청": "nts",
     "교육부": "moe",
-    "과학기술정보통신부": "msit", "과기정통부": "msit", "과기부": "msit",
-    "국가보훈부": "mpva", "보훈부": "mpva",
+    "과학기술정보통신부": "msit",
+    "과기정통부": "msit",
+    "과기부": "msit",
+    "국가보훈부": "mpva",
+    "보훈부": "mpva",
     "국방부": "mnd",
-    "농림축산식품부": "mafra", "농림부": "mafra",
-    "문화체육관광부": "mcst", "문체부": "mcst",
+    "농림축산식품부": "mafra",
+    "농림부": "mafra",
+    "문화체육관광부": "mcst",
+    "문체부": "mcst",
     "법무부": "moj",
-    "보건복지부": "mohw", "복지부": "mohw",
-    "산업통상부": "motie", "산자부": "motie",
-    "성평등가족부": "mogef", "여성가족부": "mogef", "여가부": "mogef",
+    "보건복지부": "mohw",
+    "복지부": "mohw",
+    "산업통상부": "motie",
+    "산자부": "motie",
+    "성평등가족부": "mogef",
+    "여성가족부": "mogef",
+    "여가부": "mogef",
     "외교부": "mofa",
-    "중소벤처기업부": "mss", "중기부": "mss",
+    "중소벤처기업부": "mss",
+    "중기부": "mss",
     "통일부": "mou",
     "법제처": "moleg",
-    "식품의약품안전처": "mfds", "식약처": "mfds",
+    "식품의약품안전처": "mfds",
+    "식약처": "mfds",
     "인사혁신처": "mpm",
     "기상청": "kma",
-    "국가유산청": "khs", "문화재청": "khs",
-    "농촌진흥청": "rda", "농진청": "rda",
+    "국가유산청": "khs",
+    "문화재청": "khs",
+    "농촌진흥청": "rda",
+    "농진청": "rda",
     "경찰청": "npa",
     "방위사업청": "dapa",
     "병무청": "mma",
@@ -271,11 +292,16 @@ CENTRAL_DEPT_ALIASES: Final[dict[str, str]] = {
     "소방청": "nfa",
     "재외동포청": "oka",
     "조달청": "pps",
-    "질병관리청": "kdca", "질병청": "kdca",
-    "국가데이터처": "kostat", "통계청": "kostat",
-    "지식재산처": "kipo", "특허청": "kipo",
-    "해양경찰청": "kcg", "해경청": "kcg",
-    "행정중심복합도시건설청": "naacc", "행복청": "naacc",
+    "질병관리청": "kdca",
+    "질병청": "kdca",
+    "국가데이터처": "kostat",
+    "통계청": "kostat",
+    "지식재산처": "kipo",
+    "특허청": "kipo",
+    "해양경찰청": "kcg",
+    "해경청": "kcg",
+    "행정중심복합도시건설청": "naacc",
+    "행복청": "naacc",
 }
 
 

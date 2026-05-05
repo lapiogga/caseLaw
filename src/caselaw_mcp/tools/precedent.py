@@ -79,8 +79,15 @@ async def search_precedent(
     settings = get_settings()
     cache = Cache(settings.cache_path)
     key = _cache_key(
-        "search", query, court_name, ct_code,
-        date_from, date_to, scope, display, page,
+        "search",
+        query,
+        court_name,
+        ct_code,
+        date_from,
+        date_to,
+        scope,
+        display,
+        page,
     )
     if (cached := await cache.get(key)) is not None:
         return cached
@@ -194,14 +201,16 @@ async def find_related_precedents(
             pid = str(item.get("prec_id") or "")
             if not pid or pid in seen_prec_ids or pid == str(prec_id):
                 continue
-            candidates.append({
-                "case_number": item.get("case_number"),
-                "prec_id": pid,
-                "court": item.get("court"),
-                "judgment_date": item.get("judgment_date"),
-                "case_name": item.get("case_name"),
-                "source": "referenced",
-            })
+            candidates.append(
+                {
+                    "case_number": item.get("case_number"),
+                    "prec_id": pid,
+                    "court": item.get("court"),
+                    "judgment_date": item.get("judgment_date"),
+                    "case_name": item.get("case_name"),
+                    "source": "referenced",
+                }
+            )
             seen_prec_ids.add(pid)
 
     # 2) 사건명 키워드 검색 (보조)
@@ -216,14 +225,16 @@ async def find_related_precedents(
                 pid = str(item.get("prec_id") or "")
                 if not pid or pid in seen_prec_ids or pid == str(prec_id):
                     continue
-                candidates.append({
-                    "case_number": item.get("case_number"),
-                    "prec_id": pid,
-                    "court": item.get("court"),
-                    "judgment_date": item.get("judgment_date"),
-                    "case_name": item.get("case_name"),
-                    "source": "keyword",
-                })
+                candidates.append(
+                    {
+                        "case_number": item.get("case_number"),
+                        "prec_id": pid,
+                        "court": item.get("court"),
+                        "judgment_date": item.get("judgment_date"),
+                        "case_name": item.get("case_name"),
+                        "source": "keyword",
+                    }
+                )
                 seen_prec_ids.add(pid)
         except Exception:
             pass

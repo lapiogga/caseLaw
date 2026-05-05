@@ -42,16 +42,18 @@ def test_kit_with_full_context() -> None:
         "quantitative": "2025-08-01, 1500만원",
     }
     triage = {
-        "candidates": [{
-            "id": "labor.unpaid_wage",
-            "name": "임금체불",
-            "domain": "노동",
-            "applicable_laws": ["근로기준법 제36조"],
-            "typical_path": "노동청 진정 → 민사",
-            "complexity": "low",
-            "key_evidence": ["근로계약서", "급여명세서"],
-            "common_issues": ["근로자성 인정"],
-        }]
+        "candidates": [
+            {
+                "id": "labor.unpaid_wage",
+                "name": "임금체불",
+                "domain": "노동",
+                "applicable_laws": ["근로기준법 제36조"],
+                "typical_path": "노동청 진정 → 민사",
+                "complexity": "low",
+                "key_evidence": ["근로계약서", "급여명세서"],
+                "common_issues": ["근로자성 인정"],
+            }
+        ]
     }
     statute = {
         "category": "임금 채권",
@@ -113,10 +115,12 @@ def test_kit_empty_profile_raises() -> None:
 
 def test_kit_questions_include_complexity_specific() -> None:
     triage = {
-        "candidates": [{
-            "complexity": "high",
-            "common_issues": ["과실 입증", "인과관계"],
-        }]
+        "candidates": [
+            {
+                "complexity": "high",
+                "common_issues": ["과실 입증", "인과관계"],
+            }
+        ]
     }
     qs = _build_questions(triage, None, None)
     assert any("과실 입증" in q for q in qs)

@@ -16,8 +16,10 @@ from caselaw_mcp.tools.citizen.disclaimer import attach
 
 @lru_cache(maxsize=1)
 def _load() -> dict[str, Any]:
-    text = resources.files("caselaw_mcp.citizen_data").joinpath("limitations.json").read_text(
-        encoding="utf-8"
+    text = (
+        resources.files("caselaw_mcp.citizen_data")
+        .joinpath("limitations.json")
+        .read_text(encoding="utf-8")
     )
     return json.loads(text)
 
@@ -133,8 +135,7 @@ def check_statute_of_limitations(
         elif remaining < 2.0:
             response["status"] = "warning"
             response["advice"] = (
-                f"시효 1~2년 내 ({remaining}년 남음). 변호사 상담 후 "
-                "증거 보전·내용증명 등 권장."
+                f"시효 1~2년 내 ({remaining}년 남음). 변호사 상담 후 증거 보전·내용증명 등 권장."
             )
             kinds = ["standard", "ai_limitation"]
         else:

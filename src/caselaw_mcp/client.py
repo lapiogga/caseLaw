@@ -135,9 +135,7 @@ class CaseLawClient:
             params[k] = v
         return params
 
-    async def _call(
-        self, url: str, params: dict[str, Any], *, prefer_json: bool
-    ) -> dict[str, Any]:
+    async def _call(self, url: str, params: dict[str, Any], *, prefer_json: bool) -> dict[str, Any]:
         """JSON 우선 + XML fallback + 재시도."""
         if prefer_json:
             try:
@@ -189,9 +187,7 @@ class CaseLawClient:
             raise CaseLawAPIError(f"재시도 한도 초과: {e}") from e
 
         # 마스킹된 URL을 로그에
-        logger.info(
-            "GET %s -> %d", _mask_oc(str(response.request.url), oc), response.status_code
-        )
+        logger.info("GET %s -> %d", _mask_oc(str(response.request.url), oc), response.status_code)
 
         if response.status_code >= 400:
             raise CaseLawAPIError(

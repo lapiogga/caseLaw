@@ -22,8 +22,10 @@ from caselaw_mcp.tools.citizen.disclaimer import attach
 
 @lru_cache(maxsize=1)
 def _categories() -> list[dict[str, Any]]:
-    text = resources.files("caselaw_mcp.citizen_data").joinpath("categories.json").read_text(
-        encoding="utf-8"
+    text = (
+        resources.files("caselaw_mcp.citizen_data")
+        .joinpath("categories.json")
+        .read_text(encoding="utf-8")
     )
     return json.loads(text)["categories"]
 
@@ -136,14 +138,10 @@ def triage_dispute(
                 )
                 needs_imminent_warning = True
             elif remaining < 1.0:
-                item["limitation_status"] = (
-                    f"⚠️ 시효 임박 (약 {round(remaining, 2)}년 남음)"
-                )
+                item["limitation_status"] = f"⚠️ 시효 임박 (약 {round(remaining, 2)}년 남음)"
                 needs_imminent_warning = True
             else:
-                item["limitation_status"] = (
-                    f"안전 (약 {round(remaining, 2)}년 남음)"
-                )
+                item["limitation_status"] = f"안전 (약 {round(remaining, 2)}년 남음)"
         elif cat.get("limitation_period_years") is None:
             item["limitation_status"] = "별도 규정 — 변호사 확인 필요"
 

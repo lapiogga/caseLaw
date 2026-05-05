@@ -129,8 +129,7 @@ def prepare_consultation_kit(
                 f"{cost_result.get('total_self_litigation_krw', 0):,}원"
             )
         md_lines.append(
-            f"- 총 통상 (변호사 위임): "
-            f"{cost_result.get('total_typical_with_lawyer_krw', 0):,}원"
+            f"- 총 통상 (변호사 위임): {cost_result.get('total_typical_with_lawyer_krw', 0):,}원"
         )
         md_lines.append("")
 
@@ -156,7 +155,9 @@ def prepare_consultation_kit(
     if pro_bono_result:
         md_lines.append("## 12. 무료/저비용 상담처")
         for entry in pro_bono_result.get("national", [])[:5]:
-            md_lines.append(f"- **{entry['name']}** {entry.get('phone', '')} — {entry.get('scope', '')}")
+            md_lines.append(
+                f"- **{entry['name']}** {entry.get('phone', '')} — {entry.get('scope', '')}"
+            )
         for entry in pro_bono_result.get("regional_bar", [])[:3]:
             md_lines.append(f"- {entry['name']}: {entry['phone']} ({entry['region']})")
         if pro_bono_result.get("emergency"):

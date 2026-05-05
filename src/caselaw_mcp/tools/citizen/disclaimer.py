@@ -14,8 +14,10 @@ from typing import Any
 
 @lru_cache(maxsize=1)
 def _load() -> dict[str, str]:
-    text = resources.files("caselaw_mcp.citizen_data").joinpath("disclaimers.json").read_text(
-        encoding="utf-8"
+    text = (
+        resources.files("caselaw_mcp.citizen_data")
+        .joinpath("disclaimers.json")
+        .read_text(encoding="utf-8")
     )
     return {k: v for k, v in json.loads(text).items() if not k.startswith("_")}
 

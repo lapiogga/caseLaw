@@ -45,9 +45,7 @@ class Cache:
     async def get(self, key: str) -> Any | None:
         await self._ensure_init()
         async with aiosqlite.connect(self.path) as db:
-            cur = await db.execute(
-                "SELECT value, expires_at FROM cache WHERE key = ?", (key,)
-            )
+            cur = await db.execute("SELECT value, expires_at FROM cache WHERE key = ?", (key,))
             row = await cur.fetchone()
             if row is None:
                 return None

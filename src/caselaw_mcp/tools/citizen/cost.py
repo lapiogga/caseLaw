@@ -16,8 +16,10 @@ from caselaw_mcp.tools.citizen.disclaimer import attach
 
 @lru_cache(maxsize=1)
 def _load() -> dict[str, Any]:
-    text = resources.files("caselaw_mcp.citizen_data").joinpath("court_fees.json").read_text(
-        encoding="utf-8"
+    text = (
+        resources.files("caselaw_mcp.citizen_data")
+        .joinpath("court_fees.json")
+        .read_text(encoding="utf-8")
     )
     return json.loads(text)
 
@@ -88,9 +90,7 @@ def estimate_litigation_cost(
     data = _load()
     fees_table = data["lawyer_fee_estimates"]
     if case_type not in fees_table:
-        raise ValueError(
-            f"case_type={case_type!r} 인식 불가. 유효: {list(fees_table.keys())}"
-        )
+        raise ValueError(f"case_type={case_type!r} 인식 불가. 유효: {list(fees_table.keys())}")
 
     stamp = calc_stamp_fee(claim_amount_krw)
     service = calc_service_fee()
@@ -139,18 +139,16 @@ def _make_advice(
             f"{calc_stamp_fee(claim) + calc_service_fee():,}원 정도로 가능합니다."
         )
     if case_type.startswith("criminal_"):
-        out.append(
-            "형사 사건은 인지대 없습니다. 변호사 비용이 주된 부담."
-        )
+        out.append("형사 사건은 인지대 없습니다. 변호사 비용이 주된 부담.")
     if case_type == "medical":
-        out.append("의료사고는 감정 비용(100~500만 원) 별도. 의료분쟁조정중재원 무료 조정 우선 검토.")
+        out.append(
+            "의료사고는 감정 비용(100~500만 원) 별도. 의료분쟁조정중재원 무료 조정 우선 검토."
+        )
     if case_type == "administrative":
         out.append("행정심판은 무료. 행정소송 단계부터 인지대 발생.")
     out.append(
         f"변호사 수임료 통상: 최저 {lawyer_fee['low']:,}원 / 평균 "
         f"{lawyer_fee['typical']:,}원 / 최고 {lawyer_fee['high']:,}원."
     )
-    out.append(
-        "비용 부담 시 대한법률구조공단(132) 또는 지역 변호사회 무료상담을 우선 이용하세요."
-    )
+    out.append("비용 부담 시 대한법률구조공단(132) 또는 지역 변호사회 무료상담을 우선 이용하세요.")
     return out

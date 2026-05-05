@@ -22,7 +22,9 @@ async def main() -> None:
     for m in r1["matches"]:
         print(f"  case_number: {m['case_number']} (exact_match={m.get('exact_match')})")
         for c in m.get("candidates", [])[:3]:
-            print(f"    -> prec_id={c.get('prec_id')} | {c.get('court')} | {c.get('judgment_date')}")
+            print(
+                f"    -> prec_id={c.get('prec_id')} | {c.get('court')} | {c.get('judgment_date')}"
+            )
 
     # L-2) 여러 사건번호 동시 추출
     print()
@@ -45,6 +47,7 @@ async def main() -> None:
     print("Test M: get_statute('도로교통법') 본문 → extract_attachment_links")
     print("=" * 70)
     import json
+
     law = await get_statute(law_id="001638")
     dump = json.dumps(law, ensure_ascii=False)
     attachments = extract_attachments_from_text(dump)

@@ -265,9 +265,13 @@ async def search_committee_decision(
         query, date_from, date_to, search_scope, display, page
     """
     return await cmt_tools.search_committee_decision(
-        committee, query,
-        date_from=date_from, date_to=date_to,
-        search_scope=search_scope, display=display, page=page,
+        committee,
+        query,
+        date_from=date_from,
+        date_to=date_to,
+        search_scope=search_scope,
+        display=display,
+        page=page,
     )
 
 
@@ -298,9 +302,13 @@ async def search_special_admin_judgment(
                   한국어("조세심판원","해양안전","소청") 별칭 지원.
     """
     return await spc_tools.search_special_admin_judgment(
-        tribunal, query,
-        date_from=date_from, date_to=date_to,
-        search_scope=search_scope, display=display, page=page,
+        tribunal,
+        query,
+        date_from=date_from,
+        date_to=date_to,
+        search_scope=search_scope,
+        display=display,
+        page=page,
     )
 
 
@@ -330,9 +338,13 @@ async def search_central_dept_interpretation(
               ("법무부","고용노동부","행정안전부" 등). 39종 지원.
     """
     return await dept_tools.search_central_dept_interpretation(
-        dept, query,
-        date_from=date_from, date_to=date_to,
-        search_scope=search_scope, display=display, page=page,
+        dept,
+        query,
+        date_from=date_from,
+        date_to=date_to,
+        search_scope=search_scope,
+        display=display,
+        page=page,
     )
 
 

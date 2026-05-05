@@ -37,9 +37,7 @@ def _build_target(dept_short: str) -> str:
 def _resolve_or_raise(dept: str) -> str:
     short = resolve_central_dept(dept)
     if short is None:
-        raise ValueError(
-            f"dept={dept!r} 인식 불가. 지원 약어: {sorted(CENTRAL_DEPT.keys())}"
-        )
+        raise ValueError(f"dept={dept!r} 인식 불가. 지원 약어: {sorted(CENTRAL_DEPT.keys())}")
     return short
 
 

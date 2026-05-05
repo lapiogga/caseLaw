@@ -28,9 +28,7 @@ def _key(*parts: Any) -> str:
 def _resolve_or_raise(committee: str) -> str:
     target = resolve_committee(committee)
     if target is None:
-        raise ValueError(
-            f"committee={committee!r} 인식 불가. 지원: {sorted(COMMITTEE.keys())}"
-        )
+        raise ValueError(f"committee={committee!r} 인식 불가. 지원: {sorted(COMMITTEE.keys())}")
     return target
 
 

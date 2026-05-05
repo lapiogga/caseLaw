@@ -107,9 +107,7 @@ async def evaluate_case_strength(
     total = analyzed + unclassified
 
     pct_dist = (
-        {k: round(v / analyzed * 100, 1) for k, v in counter.most_common()}
-        if analyzed > 0
-        else {}
+        {k: round(v / analyzed * 100, 1) for k, v in counter.most_common()} if analyzed > 0 else {}
     )
 
     win_count = counter.get("원고승", 0) + counter.get("원고일부승", 0)

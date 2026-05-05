@@ -62,11 +62,13 @@ async def find_precedent_by_citation(
         items = r.get("items", [])
         exact = [it for it in items if str(it.get("case_number") or "").strip() == case_no]
         candidates = exact if exact else items
-        matches.append({
-            "case_number": case_no,
-            "candidates": candidates[:max_items],
-            "exact_match": bool(exact),
-        })
+        matches.append(
+            {
+                "case_number": case_no,
+                "candidates": candidates[:max_items],
+                "exact_match": bool(exact),
+            }
+        )
 
     return {
         "input": citation,

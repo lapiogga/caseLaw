@@ -44,9 +44,7 @@ def set_user_mode(mode: str) -> dict[str, str]:
         mode: 'lawyer' (전문 모드) 또는 'citizen' (일반인 모드)
     """
     if mode not in VALID_MODES:
-        raise ValueError(
-            f"mode must be one of {VALID_MODES}, got {mode!r}"
-        )
+        raise ValueError(f"mode must be one of {VALID_MODES}, got {mode!r}")
     p = _state_path()
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps({"mode": mode}, ensure_ascii=False), encoding="utf-8")

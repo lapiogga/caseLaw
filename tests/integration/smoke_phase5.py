@@ -21,8 +21,10 @@ async def main() -> None:
     print("Test I: analyze_precedent_trend('음주운전', group_by='year')")
     print("=" * 70)
     trend_year = await analyze_precedent_trend("음주운전", group_by="year", sample_size=50)
-    print(f"total_analyzed={trend_year['total_analyzed']}, "
-          f"total_available={trend_year['total_available']}")
+    print(
+        f"total_analyzed={trend_year['total_analyzed']}, "
+        f"total_available={trend_year['total_available']}"
+    )
     for d in trend_year["distribution"][:10]:
         print(f"  {d['key']}: {d['count']} 건")
 
@@ -58,7 +60,7 @@ async def main() -> None:
     print(f"비교 건수: {cmp_result['count']}")
     for r in cmp_result["rows"]:
         print(f"  - {r.get('case_number')} | {r.get('court')} | {r.get('judgment_date')}")
-        n = (r.get("case_name") or "")
+        n = r.get("case_name") or ""
         if n:
             print(f"    사건명: {n[:100]}")
 

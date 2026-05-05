@@ -54,9 +54,7 @@ async def download_attachment(
     ) as client:
         resp = await client.get(DOWNLOAD_BASE, params={"flSeq": seq})
         if resp.status_code != 200:
-            raise RuntimeError(
-                f"다운로드 실패 HTTP {resp.status_code} (flSeq={seq})"
-            )
+            raise RuntimeError(f"다운로드 실패 HTTP {resp.status_code} (flSeq={seq})")
         if not resp.content:
             raise RuntimeError(f"빈 응답 (flSeq={seq}) — 권한 또는 잘못된 seq 가능")
 
@@ -105,6 +103,7 @@ def _filename_from_headers(disposition: str | None) -> str | None:
     m = re.search(r"filename\*=(?:UTF-8'')?([^;]+)", disposition, re.IGNORECASE)
     if m:
         from urllib.parse import unquote
+
         return unquote(m.group(1).strip().strip('"'))
     m = re.search(r'filename="?([^";]+)"?', disposition, re.IGNORECASE)
     if m:
@@ -135,9 +134,28 @@ def _safe_filename(name: str) -> str:
         cleaned = "attachment.bin"
     # Windows 예약 이름 회피
     if cleaned.upper().split(".")[0] in {
-        "CON", "PRN", "AUX", "NUL",
-        "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
-        "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9",
+        "CON",
+        "PRN",
+        "AUX",
+        "NUL",
+        "COM1",
+        "COM2",
+        "COM3",
+        "COM4",
+        "COM5",
+        "COM6",
+        "COM7",
+        "COM8",
+        "COM9",
+        "LPT1",
+        "LPT2",
+        "LPT3",
+        "LPT4",
+        "LPT5",
+        "LPT6",
+        "LPT7",
+        "LPT8",
+        "LPT9",
     }:
         cleaned = "_" + cleaned
     return cleaned[:200]  # 길이 제한

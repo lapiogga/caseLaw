@@ -78,7 +78,9 @@ async def main() -> None:
     t0 = time.time()
     _ = await search_precedent("음주운전", display=5)
     elapsed = time.time() - t0
-    print(f"second call elapsed: {elapsed:.3f}s ({'CACHE HIT ✓' if elapsed < 0.1 else 'CACHE MISS'})")
+    print(
+        f"second call elapsed: {elapsed:.3f}s ({'CACHE HIT ✓' if elapsed < 0.1 else 'CACHE MISS'})"
+    )
 
     print()
     print("=" * 70)
