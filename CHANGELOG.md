@@ -306,6 +306,62 @@
 
 ---
 
+## [0.8.0-distribution] — 2026-05-05 ~ 2026-05-06 (배포·문서·자동화 트랙)
+
+> 패키지 코드 v0.8.0 그대로. 본 트랙은 **배포 인프라 + 비기술자 진입 장벽 제거 + 홍보 자산** 에 집중.
+
+### Added — 배포 채널
+- **GitHub Public Repo**: <https://github.com/lapiogga/caseLaw> (init, Description, Topics 10개)
+- **GitHub Release v0.8.0**: wheel + sdist + installer ZIP (rev 3) 첨부
+- **PyPI 정식 배포**: <https://pypi.org/project/caselaw-mcp/> (`uvx caselaw-mcp` 한 줄 설치)
+- **GitHub Actions CI**: Python 3.11/3.12/3.13 매트릭스 PASS
+
+### Added — 비기술자 원클릭 설치
+- `scripts/설치하기.bat` + `scripts/setup-for-novice.ps1` (UTF-8 BOM, 5단계 대화형)
+  * winget 으로 Python·uv·Claude Desktop 자동 설치
+  * OC 키 대화형 입력 (또는 발급 사이트 자동 오픈)
+  * Claude Desktop config 자동 작성 (기존 설정 보존·백업·검증)
+- `CaseLaw-installer-v0.8.0.zip` (8KB) — Release 첨부, 더블클릭 설치
+
+### Added — 문서 (사용자 유형별)
+- `docs/소개자료_일반인.md` — 1페이지 분량, 비기술자 설득용
+- `docs/기술노트_MCP아키텍처.md` — 14섹션, 개발자·IT 책임자·보안 검토자용
+- `docs/설치_시각가이드.md` — 5단계 + FAQ + 사용 예시 4종, 스크린샷 11장
+- `docs/OC발급_가이드.md` — 9단계 + 6 FAQ
+- `docs/promo/Vrew_슬라이드쇼_제작_완전가이드.md` — Vrew 처음 사용자용 11단계
+- `docs/promo/영상_대본_5분.md` — 30컷 시간별 음성·자막·화면 안내
+- `docs/promo/GIF_가이드_골격.md` — 마크다운 + GIF 자리 22곳
+- `docs/promo/Vrew_제작_가이드.md` — Vrew 정통 워크플로
+- `docs/promo/automation/capture_pages.py` — Playwright 공개 페이지 자동 캡처
+- `docs/promo/automation/demo-install-flow.ps1` — 설치 시연 (ScreenToGif 녹화용)
+
+### Added — 시각 자료
+- `docs/promo/images/01~06.png` — Playwright 자동 캡처 (총 5MB, GitHub/PyPI/법제처/OC가이드/Release/ZIP)
+- `docs/promo/images/07-install-demo.gif` — 설치 흐름 GIF (사용자 캡처)
+- `docs/promo/images/capture-01~04.png` — Claude Desktop 실사용 화면 (커넥터·ping·자전거·커피숍)
+
+### Fixed — installer 안정화 (3 rev 진행)
+- **rev 1**: 초기 작성
+- **rev 2**: 4단계 (Claude Desktop config 작성) Add-Member 가 빈 PSCustomObject 에서 작동 안 하는 PowerShell 5.1 동작 회피 — PSCustomObject → ordered Hashtable 변환 후 직접 키 할당. 작성 후 자동 검증 추가.
+- **rev 3**: native command (uv, winget) 의 stderr 출력이 `$ErrorActionPreference = 'Stop'` 으로 인해 NativeCommandError 로 throw 되는 문제 — 해당 호출 구간에서 'Continue' 임시 설정 후 `$LASTEXITCODE` 기반 판단.
+
+### Fixed — wheel 빌드
+- `pyproject.toml` 의 `force-include` 가 `packages` 와 중복되어 wheel 안에 citizen_data JSON 이 두 번 들어가던 문제 제거 (52 entries 깔끔)
+
+### Changed
+- README 최상단에 비기술자용 안내 섹션 + 일반인 소개자료 + 기술 노트 링크 배치
+- `.gitignore`: `docs/promo/**/*.png|jpg|gif` 예외 (README 노출용 자료는 추적), `docs/promo/videos/`, `*.vrew` 무시
+
+### Created — Vrew 슬라이드쇼 영상 (본인 PC)
+- 11장 캡처 + AI 음성 + 자막 자동 + BGM + 페이드 전환
+- 약 2-3분 분량, 1080p MP4
+- YouTube 업로드는 다음 세션에 진행
+
+### 누적 commit (본 트랙)
+- 14 commits (init → installer rev 3 → 일반인/기술 자료 → .vrew 정리)
+
+---
+
 ## [Unreleased]
 
 ### Planned (Phase 12+)
@@ -315,3 +371,6 @@
 - Web UI 대시보드
 - 변호사 검토·인증된 시드 데이터 (`confirmed=true`)
 - 카테고리·시효·비용 시드 자체 다국어화 (ja/zh/vi 확장)
+- YouTube 영상 업로드 + README 임베드
+- 영어·중국어 다국어 영상 (Vrew 다국어 워크플로)
+- Anthropic Connector Directory 등록 신청

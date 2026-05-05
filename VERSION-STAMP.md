@@ -1,7 +1,8 @@
-# VERSION STAMP — v0.8.0
+# VERSION STAMP — v0.8.0 (Distribution Ready)
 
-> **Stamped**: 2026-05-05 13:20 KST
-> **Build**: 변호사 + 일반인 + 외국인 사용자 3-트랙 통합 MCP
+> **Initial Stamp**: 2026-05-05 13:20 KST
+> **Distribution Stamp**: 2026-05-06 KST (배포·문서·자동화 트랙 완료)
+> **Build**: 변호사 + 일반인 + 외국인 사용자 3-트랙 통합 MCP + 공개 배포 인프라
 
 ## 마일스톤 인증
 
@@ -51,14 +52,48 @@
 | 문서 | 13개 (PLAN/README/CHANGELOG/LICENSE/VERSION-STAMP + docs/* 7개 + .planning/*) |
 | 총 작업 시간 | 약 130분 (2026-05-04 16:00 ~ 2026-05-05 13:20) |
 
+## 배포·문서 트랙 (2026-05-05 ~ 2026-05-06 추가) ✅
+
+### 공개 배포
+- GitHub Public Repo: <https://github.com/lapiogga/caseLaw>
+- GitHub Release v0.8.0: wheel + sdist + installer ZIP (rev 3)
+- PyPI: <https://pypi.org/project/caselaw-mcp/> (`uvx caselaw-mcp` 1줄 설치)
+- CI: Python 3.11/3.12/3.13 PASS
+
+### 비기술자 진입 장벽 제거
+- 원클릭 .bat 설치기 (rev 3, 4단계 검증 + native stderr 처리 안정화)
+- 7KB 사전 패키징 ZIP (Release 첨부, 더블클릭 설치)
+
+### 사용자 유형별 문서 (8종)
+- 일반인 1장 소개자료 + 개발자 14섹션 기술노트
+- 시각 설치 가이드 (스크린샷 11장)
+- OC 발급 9단계 가이드
+- Vrew 영상 제작 완전 가이드 + 5분 대본 + GIF 골격
+- Playwright 자동 캡처 스크립트 + 시연 시뮬레이터
+
+### 시각 자료
+- 자동 캡처 6장 (Playwright) + 사용자 캡처 5장 = 총 11장 (5MB)
+- Vrew 슬라이드쇼 영상 1편 (사용자 본인 PC, 약 2-3분 1080p)
+
+### 누적 commit (본 트랙)
+- 14 commits (init → 배포 → 문서 → 영상 → 정리)
+
+---
+
 ## 다음 마일스톤 (v0.9.0+ 예고)
 
+### 콘텐츠
 - 카테고리 50 → 100종 (변협 협업)
 - 외국 판례 통합 (CourtListener)
 - Vector DB 의미 검색
-- Web UI 대시보드
 - 변호사 검토 인증 (`confirmed=true` 시드)
 - 카테고리·시효·비용 시드 자체 다국어화
+
+### 인프라·홍보
+- YouTube 영상 업로드 + README 임베드
+- 영어·중국어 다국어 영상 제작 (Vrew 다국어 워크플로)
+- Anthropic Connector Directory 등록 신청
+- Web UI 대시보드 (MCP 외 일반 변호사용)
 
 ## 동결 코드 영역 (v0.8.0)
 
