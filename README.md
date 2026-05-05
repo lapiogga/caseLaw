@@ -2,7 +2,7 @@
 
 > 법제처 국가법령정보 공동활용 OpenAPI(191종)를 **MCP(Model Context Protocol) 서버**로 표준화하여, 변호사·로펌이 Claude Desktop / Cursor / VS Code 등 자연어 환경에서 한국 판례·법령·결정례를 검색·인용·요약할 수 있게 한다.
 
-[![CI](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml/badge.svg)](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml) [![Tests](https://img.shields.io/badge/tests-250%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-44-blue)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
+[![PyPI](https://img.shields.io/pypi/v/caselaw-mcp)](https://pypi.org/project/caselaw-mcp/) [![CI](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml/badge.svg)](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml) [![Tests](https://img.shields.io/badge/tests-250%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-44-blue)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
 
 **상태**: v0.8.0 — Tri-Track (변호사 + 일반인 + 외국인) 완성. 활성 MCP Tool **44종**.
 
@@ -18,35 +18,42 @@
 
 ## 빠른 시작 (다른 사람이 본 MCP 를 설치할 때)
 
-### 사전 준비 (5분)
+### 사전 준비
 
-1. **OC 키 발급** (무료): <https://open.law.go.kr/LSO/openApi/cuAskList.do>
+1. **OC 키 발급** (무료, 5분): <https://open.law.go.kr/LSO/openApi/cuAskList.do>
    - 회원가입 → 활용신청 → 마이페이지 → API인증키관리에서 ID 확인
 2. **필수 도구**:
    - Python 3.11+ (<https://python.org>)
    - uv (`winget install astral-sh.uv`)
    - Claude Desktop (<https://claude.ai/download>)
-   - Git (`winget install Git.Git`)
 
-### 설치
+### 옵션 A — PyPI 한 줄 설치 (권장, git/clone 불필요)
+
+Claude Desktop config (`%LOCALAPPDATA%\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "caselaw": {
+      "command": "uvx",
+      "args": ["caselaw-mcp"],
+      "env": { "CASELAW_OC": "발급받은_ID" }
+    }
+  }
+}
+```
+
+저장 후 Claude Desktop 완전 재시작 → 채팅창 "caselaw 로 ping 해줘" → 성공.
+
+### 옵션 B — 소스 clone (개발자·기여자용)
 
 ```powershell
-# 1. 저장소 clone
-git clone https://github.com/lapiogga/caselaw-mcp.git
-cd caselaw-mcp
-
-# 2. 의존성 설치
+git clone https://github.com/lapiogga/caseLaw.git
+cd caseLaw
 uv sync --extra dev
-
-# 3. OC 키 .env 작성 (시크릿이므로 config 가 아닌 .env 사용)
 "CASELAW_OC=발급받은_ID" | Out-File -Encoding ASCII .env
-
-# 4. Claude Desktop 자동 등록 (MSIX/일반 설치 모두 대응)
 .\scripts\install-caselaw-mcp.ps1
-
-# 5. Claude Desktop 완전 재시작 후 채팅창에:
-#    "caselaw 로 ping 해줘"
-#    → {"status":"ok","oc_configured":true,"phase":"11-i18n"} 반환되면 성공
+# Claude Desktop 완전 재시작 → "caselaw 로 ping 해줘"
 ```
 
 상세: [docs/INSTALL.md](docs/INSTALL.md) (Cursor / VS Code 포함)
