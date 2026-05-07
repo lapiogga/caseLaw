@@ -34,6 +34,10 @@ class Settings(BaseSettings):
     # HTTP 타임아웃 (초). 첫 TLS 핸드셰이크 + 큰 본문(법령 전문) 고려.
     http_timeout: float = Field(default=30.0, gt=0)
 
+    # HTTP transport Bearer 토큰 (외부 노출 시 필수, stdio 모드에서는 무시).
+    # 미설정 시 인증 비활성 (로컬 신뢰 네트워크 한정).
+    auth_token: str = Field(default="", description="HTTP transport Bearer 인증 토큰")
+
     model_config = SettingsConfigDict(
         env_prefix="CASELAW_",
         env_file=".env",

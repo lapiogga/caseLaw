@@ -9,10 +9,11 @@
 
 from __future__ import annotations
 
-import os
 import secrets
 from collections.abc import Awaitable, Callable
 from typing import Any
+
+from caselaw_mcp.config import get_settings
 
 ASGIScope = dict[str, Any]
 ASGIReceive = Callable[[], Awaitable[dict[str, Any]]]
@@ -77,6 +78,11 @@ class BearerAuthMiddleware:
 
 
 def get_auth_token() -> str | None:
-    """환경변수에서 인증 토큰 조회. 빈 문자열은 None 으로 정규화."""
-    token = os.environ.get("CASELAW_AUTH_TOKEN", "").strip()
+    """Settings (.env + env var) 에서 Bearer 토큰 조회.
+
+    pydantic-settings 가 `.env` 파일을 자체 Settings 객체에만 로드하고
+    `os.environ` 에는 주입하지 않으므로, 일관된 경로(get_settings) 로 읽는다.
+    빈 문자열은 None 으로 정규화 (인증 비활성).
+    """
+    token = get_settings().auth_token.strip()
     return token or None

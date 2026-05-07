@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from collections.abc import Awaitable, Callable
 from typing import Any
 from unittest.mock import patch
@@ -10,6 +9,7 @@ from unittest.mock import patch
 import pytest
 
 from caselaw_mcp.auth import BearerAuthMiddleware, get_auth_token
+from caselaw_mcp.config import Settings
 
 
 # ─────────────────────────────────────────────
@@ -56,19 +56,23 @@ class _Sink:
 # ─────────────────────────────────────────────
 # get_auth_token
 # ─────────────────────────────────────────────
+def _settings_with_token(token: str) -> Settings:
+    """`.env` 무시하고 인-메모리 Settings 생성 (테스트 격리)."""
+    return Settings(_env_file=None, auth_token=token)  # type: ignore[call-arg]
+
+
 def test_get_auth_token_unset_returns_none() -> None:
-    with patch.dict(os.environ, {}, clear=False):
-        os.environ.pop("CASELAW_AUTH_TOKEN", None)
+    with patch("caselaw_mcp.auth.get_settings", return_value=_settings_with_token("")):
         assert get_auth_token() is None
 
 
-def test_get_auth_token_empty_string_returns_none() -> None:
-    with patch.dict(os.environ, {"CASELAW_AUTH_TOKEN": "   "}):
+def test_get_auth_token_whitespace_returns_none() -> None:
+    with patch("caselaw_mcp.auth.get_settings", return_value=_settings_with_token("   ")):
         assert get_auth_token() is None
 
 
 def test_get_auth_token_set_returns_value() -> None:
-    with patch.dict(os.environ, {"CASELAW_AUTH_TOKEN": "secret-abc"}):
+    with patch("caselaw_mcp.auth.get_settings", return_value=_settings_with_token("secret-abc")):
         assert get_auth_token() == "secret-abc"
 
 
