@@ -2,6 +2,54 @@
 
 본 프로젝트는 [Semantic Versioning](https://semver.org/) 을 따른다.
 
+## [0.11.0] — 2026-05-08 — **Outcome Prediction**
+
+변호사 트랙이 의뢰인 첫 질문 3종 ("이길 수 있나요?·얼마 받을까요?·얼마나 걸릴까요?") 에 **표본 기반 통계로** 답하는 단계로 확장. 활성 MCP Tool **52종** (48 → 52), 단위 테스트 **352 PASS** (314 → 352).
+
+### Added — Phase 14 Outcome Prediction
+
+- **`src/caselaw_mcp/tools/prediction/`** 신규 모듈
+  - `labels.py` — 한국 판결문 결과 라벨링 휴리스틱
+    - `label_civil_outcome` (granted/partial/dismissed/withdrawn/unknown)
+    - `label_sentencing` (acquitted/suspended_sentence/fine/imprisonment/unknown)
+    - `extract_awarded_amount` (인정 금액 정규식 추출)
+    - 일부인용 우선·집유 우선 로직 (granted/imprisonment 와 충돌 회피)
+  - `sentencing.py` — `predict_sentencing`: 형사 양형 분포 (벌금/집유/실형 비율 + 분류 불가 솔직 보고)
+  - `civil_outcome.py` — `predict_civil_outcome`: 민사 인용/일부/기각/취하 비율 + 인정 금액 통계 (평균·중앙값·최소·최대)
+  - `duration.py` — `estimate_case_duration`: 사법연감 시드 기반 1·2·3심 평균 + 95% CI
+  - `resolution.py` — `dispute_resolution_options`: 소송 vs 조정 vs 화해 vs 중재 4-옵션 비교 매트릭스 + 본건 추천
+- **`src/caselaw_mcp/prediction_data/duration_baselines.json`** 신규 시드 (importlib.resources 로드, citizen_data 패턴)
+- **표본 크기 가드** (모든 predict_*)
+  - N<5 → `ValueError` 즉시 거부 ("표본 부족, 키워드 넓히세요")
+  - 5≤N<10 → "참고용 그림자 데이터" 강한 경고
+  - 10≤N<30 → "신뢰구간 넓을 수 있음" 경고
+  - N≥30 → 정상
+- **자동 면책 부착** (drafting 모듈 패턴 재활용)
+  - 모든 predict_* 출력에 `DISCLAIMER_MARKER` 강제
+  - 회귀 가드: 4 도구 parametrized 단위 테스트
+- **호출 경로** — `predict_sentencing` / `predict_civil_outcome` 는 내부에서 `search_precedent` 호출 → 라벨링 → 집계. `use_full_text=True` 옵션 시 `get_precedent` 까지 fetch 해 정확도 ↑ (느림, 캐시 활용).
+
+### Changed
+
+- `server.py`: 신규 4 tool 등록 (총 **52 tool**), `ping().phase` = `"14-outcome-prediction"`
+- `pyproject.toml`: 0.10.0 → 0.11.0
+- `src/caselaw_mcp/__init__.py`: `__version__` 0.11.0
+- `tests/unit/test_server.py`: phase 단언 갱신
+
+### Verified
+
+- 352 단위 테스트 PASS (prediction 38 신규: labels 17 + duration 4 + resolution 4 + sentencing 2 + civil_outcome 2 + 회귀 가드 4 + 표본 가드 5)
+- ruff lint + format PASS
+
+### Out of Scope (Phase 15+ 후보)
+
+- ML 기반 라벨링 정확도 향상 (현재 휴리스틱)
+- 재판부별 경향 분석
+- 실시간 신판례 알림
+- 외국 판례 통합 (CourtListener)
+
+---
+
 ## [0.10.0] — 2026-05-08 — **Practitioner Doc Drafting**
 
 변호사 트랙이 검색·분석에서 **문서 초안 자동 생성**까지 확장. 활성 MCP Tool **48종** (44 → 48), 단위 테스트 **314 PASS** (267 → 314).
