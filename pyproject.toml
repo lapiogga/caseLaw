@@ -1,7 +1,7 @@
 [project]
 name = "caselaw-mcp"
-version = "0.8.0"
-description = "법제처 국가법령정보 공동활용 OpenAPI 기반 MCP 서버 (변호사·로펌 AI 보조)"
+version = "0.9.0"
+description = "법제처 국가법령정보 공동활용 OpenAPI 기반 MCP 서버 (변호사·로펌 AI 보조, Multi-Client)"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -28,6 +28,9 @@ dependencies = [
   "aiosqlite>=0.20.0",
   "tenacity>=8.3.0",
   "structlog>=24.1.0",
+  # HTTP transport (ChatGPT·원격 MCP 클라이언트용; stdio 모드에서는 import 안 됨)
+  "starlette>=0.37.0",
+  "uvicorn>=0.30.0",
 ]
 
 [project.optional-dependencies]

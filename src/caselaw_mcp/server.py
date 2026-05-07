@@ -12,6 +12,7 @@
 
 from __future__ import annotations
 
+import argparse
 import sys
 from datetime import UTC, datetime
 from typing import Any
@@ -19,6 +20,7 @@ from typing import Any
 from mcp.server.fastmcp import FastMCP
 
 from caselaw_mcp import __version__
+from caselaw_mcp.auth import BearerAuthMiddleware, get_auth_token
 from caselaw_mcp.codes import CASE_TYPE, CASE_TYPE_EN, COURT_ALIASES, SEARCH_SCOPE
 from caselaw_mcp.config import get_settings
 from caselaw_mcp.tools import admin_judg as adj_tools
@@ -52,6 +54,9 @@ mcp = FastMCP(
         "search_*로 목록을, get_*로 본문을 받는다. "
         "find_related_precedents 로 관련 판례를 추천."
     ),
+    # HTTP transport 친화 옵션 (stdio 모드에는 영향 없음).
+    stateless_http=True,
+    json_response=True,
 )
 
 
@@ -67,7 +72,7 @@ def ping() -> dict[str, Any]:
         "version": __version__,
         "time_utc": datetime.now(UTC).isoformat(),
         "oc_configured": bool(settings.oc),
-        "phase": "11-i18n",
+        "phase": "12-multi-client",
         "user_locale": cit_locale.get_user_locale(),
         "user_mode": cit_mode.get_user_mode(),
     }
@@ -738,9 +743,67 @@ def lookup_case_codes() -> dict[str, Any]:
 # ─────────────────────────────────────────────
 # Entrypoint
 # ─────────────────────────────────────────────
+def _build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="caselaw-mcp",
+        description="CaseLaw MCP 서버 (법제처 OpenAPI 기반).",
+    )
+    parser.add_argument(
+        "--transport",
+        choices=["stdio", "http"],
+        default="stdio",
+        help="전송 방식. stdio (기본, Claude Desktop·Gemini CLI·Cursor 등) / http (ChatGPT·원격).",
+    )
+    parser.add_argument(
+        "--host",
+        default="127.0.0.1",
+        help="HTTP 모드 listen 주소 (기본 127.0.0.1; 외부 노출은 0.0.0.0).",
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8000,
+        help="HTTP 모드 listen 포트 (기본 8000).",
+    )
+    parser.add_argument(
+        "--path",
+        default="/mcp",
+        help="HTTP 모드 마운트 경로 (기본 /mcp).",
+    )
+    return parser
+
+
+def _run_http(host: str, port: int, mount_path: str) -> None:
+    """Starlette 위에 mcp.streamable_http_app 을 마운트하고 Bearer 인증을 감싼다."""
+    import contextlib
+
+    import uvicorn
+    from starlette.applications import Starlette
+    from starlette.routing import Mount
+
+    # mount path 아래 루트(/)로 mcp 앱이 노출되도록 streamable_http_path 를 / 로 변경.
+    mcp.settings.streamable_http_path = "/"
+
+    @contextlib.asynccontextmanager
+    async def lifespan(_app: Starlette):
+        async with mcp.session_manager.run():
+            yield
+
+    inner_app = Starlette(
+        routes=[Mount(mount_path, app=mcp.streamable_http_app())],
+        lifespan=lifespan,
+    )
+    asgi_app = BearerAuthMiddleware(inner_app, get_auth_token())
+    uvicorn.run(asgi_app, host=host, port=port, log_level="info")
+
+
 def main() -> None:
+    args = _build_arg_parser().parse_args()
     try:
-        mcp.run()
+        if args.transport == "stdio":
+            mcp.run()
+        else:
+            _run_http(args.host, args.port, args.path)
     except KeyboardInterrupt:
         sys.exit(0)
 
