@@ -37,7 +37,7 @@
 요약:
 
 1. **설치 패키지 다운로드** (8KB):
-   <https://github.com/lapiogga/caseLaw/releases/download/v0.9.0/CaseLaw-installer-v0.9.0.zip>
+   <https://github.com/lapiogga/caseLaw/releases/download/v0.11.0/CaseLaw-installer-v0.11.0.zip>
 2. 압축 풀고 **`설치하기.bat` 더블클릭**
 3. 화면 안내대로 진행 (OC 키 없으면 발급 사이트가 자동으로 열립니다)
 4. 3-7분 자동 설치 후 Claude Desktop 켜고 채팅창에:
