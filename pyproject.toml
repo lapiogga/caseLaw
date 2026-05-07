@@ -51,6 +51,23 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/caselaw_mcp"]
 
+# sdist 는 코드·문서·테스트만 포함. promo 영상·캡처·plan 메타는 제외
+# (hatchling 기본은 워킹트리 전체 → mp4/png 가 들어가 비대해짐).
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/caselaw_mcp/**",
+  "tests/**",
+  "docs/**/*.md",
+  "scripts/*.ps1",
+  "scripts/*.bat",
+  "README.md",
+  "CHANGELOG.md",
+  "LICENSE",
+  "pyproject.toml",
+  "VERSION-STAMP.md",
+  ".env.example",
+]
+
 # ─────────────────────────────────────────────
 # Ruff (lint + format 통합)
 # ─────────────────────────────────────────────
