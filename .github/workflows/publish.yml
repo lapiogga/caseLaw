@@ -50,8 +50,8 @@ jobs:
       - name: Sync project (no dev extras)
         run: uv sync --no-dev
 
-      - name: Lint sanity (ruff check)
-        run: uv run ruff check .
+      # ruff/pytest sanity 는 main push 시 CI 가 이미 검증함 (publish 트리거는
+      # release published 또는 수동, 둘 다 main 코드 기준이라 redundant).
 
       - name: Build sdist + wheel
         run: |
