@@ -1,0 +1,74 @@
+name: Publish to PyPI
+
+# GitHub Release 가 published 상태로 전환되면 자동 트리거.
+# Draft → Published 전환 시 (gh release create 또는 웹 UI 의 "Publish release" 버튼).
+#
+# 인증: PyPI Trusted Publishing (OIDC). API 토큰 불필요.
+# 사전 1회 설정 필요:
+#   https://pypi.org/manage/project/caselaw-mcp/settings/publishing/
+#   - Owner:        lapiogga
+#   - Repository:   caseLaw
+#   - Workflow:     publish.yml
+#   - Environment:  pypi
+#
+# 수동 실행: workflow_dispatch (Actions 탭의 "Run workflow")
+# 단, 수동 실행 시에는 dist/ 가 main 의 최신 코드 기준으로 빌드됨.
+# 정확한 태그 기준 publish 가 필요하면 GitHub Release 의 publish 토글을 사용.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # OIDC 토큰 발급 (Trusted Publishing 필수)
+  contents: read
+
+jobs:
+  publish:
+    name: Build & Publish to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/caselaw-mcp/
+
+    steps:
+      - name: Checkout (release tag if available)
+        uses: actions/checkout@v4
+        with:
+          # release 트리거: tag_name 사용. workflow_dispatch: 기본 main.
+          ref: ${{ github.event.release.tag_name || github.ref }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Sync project (no dev extras)
+        run: uv sync --no-dev
+
+      - name: Lint sanity (ruff check)
+        run: uv run ruff check .
+
+      - name: Build sdist + wheel
+        run: |
+          rm -rf dist/
+          uv build
+
+      - name: Verify build artifacts
+        run: |
+          ls -la dist/
+          # sdist 가 비대해지지 않았는지 확인 (promo 영상 회귀 방지).
+          # 1MB 초과 시 fail (정상 sdist 는 200KB 미만).
+          size=$(stat -c%s dist/caselaw_mcp-*.tar.gz)
+          echo "sdist size: $size bytes"
+          if [ "$size" -gt 1048576 ]; then
+            echo "::error::sdist exceeds 1MB — promo assets may have leaked into the build"
+            exit 1
+          fi
+
+      - name: Publish to PyPI (Trusted Publishing)
+        run: uv publish --trusted-publishing always
