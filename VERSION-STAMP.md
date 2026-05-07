@@ -1,19 +1,22 @@
-# VERSION STAMP — v0.8.0 (Distribution Ready)
+# VERSION STAMP — v0.9.0 (Multi-Client Edition)
 
-> **Initial Stamp**: 2026-05-05 13:20 KST
+> **Initial Stamp**: 2026-05-05 13:20 KST (v0.8.0 Tri-Track)
 > **Distribution Stamp**: 2026-05-06 KST (배포·문서·자동화 트랙 완료)
-> **Build**: 변호사 + 일반인 + 외국인 사용자 3-트랙 통합 MCP + 공개 배포 인프라
+> **Multi-Client Stamp**: 2026-05-07 KST (Claude · Gemini · ChatGPT 3-클라이언트 동시 지원)
+> **Build**: 3-사용자 트랙 (변호사 + 일반인 + 외국인) × 3-클라이언트 (Claude · Gemini · ChatGPT)
 
 ## 마일스톤 인증
 
 | 항목 | 값 |
 |---|---|
-| **Version** | v0.8.0 |
-| **Codename** | Tri-Track (Lawyer + Citizen + Foreigner) |
+| **Version** | v0.9.0 |
+| **Codename** | Multi-Client Edition |
 | **MCP Tools** | 44 |
-| **단위 테스트** | 250 PASS |
-| **통합 smoke** | 19 시나리오 |
+| **단위 테스트** | **267** PASS (이전 250 → 신규 17: auth 11 + transport_cli 6) |
+| **통합 smoke** | 19 시나리오 + HTTP 모드 Bearer 정/오 (3 케이스 라이브 검증) |
 | **UAT (Claude Desktop)** | ✅ v0.3.0 시점 통과 (2026-05-05 00:08 KST) |
+| **지원 클라이언트** | 5 (Claude Desktop · Gemini CLI · Cursor · VS Code · ChatGPT) |
+| **지원 transport** | 2 (stdio · streamable-http) |
 | **지원 언어** | 5 (ko/en/zh/vi/ja) |
 
 ## 트랙별 도달 상태
@@ -95,14 +98,27 @@
 - Anthropic Connector Directory 등록 신청
 - Web UI 대시보드 (MCP 외 일반 변호사용)
 
-## 동결 코드 영역 (v0.8.0)
+## 동결 코드 영역 (v0.9.0)
 
 이후 변경 시 후방호환 책임:
 - `src/caselaw_mcp/server.py` 의 44 tool signature
+- `src/caselaw_mcp/server.py` 의 CLI flag 4 (`--transport`, `--host`, `--port`, `--path`) — 인자 이름·기본값
+- `src/caselaw_mcp/auth.py` 의 `CASELAW_AUTH_TOKEN` 환경변수 + `Authorization: Bearer` 검증 동작
 - `src/caselaw_mcp/parsers.py` 의 응답 키 매핑 (영문 snake_case)
 - `client.py` 의 OC 환경변수·캐시 경로
 - `tools/citizen/{mode,locale}.py` 의 파일 기반 상태 (~/.caselaw_mcp/{mode,locale}.json)
 - `citizen_data/*.json` 시드 (추가만, 기존 ID 변경·제거 금지)
 - `docs/API_REFERENCE.md` 에 명시된 입출력 스키마
+- HTTP 엔드포인트 기본값 `127.0.0.1:8000/mcp` (변경 시 가이드 동시 갱신)
 
 신규 기능은 **추가만** (기존 tool 제거·rename 금지).
+
+## v0.9.0 Multi-Client 라이브 검증
+
+| 시나리오 | 명령 / 입력 | 결과 |
+|---|---|---|
+| stdio 회귀 | `pytest tests/` | 267 PASS / ruff PASS / format PASS |
+| HTTP boot | `caselaw-mcp --transport http --port 18765` | uvicorn listen 정상 |
+| Bearer 누락 | `curl POST /mcp/` (Authorization 없음) | HTTP 401 |
+| Bearer 오류 | `curl POST /mcp/ -H 'Authorization: Bearer wrong'` | HTTP 401 |
+| Bearer 정상 | `curl POST /mcp/ -H 'Authorization: Bearer <token>'` (initialize) | 200 + serverInfo + 한국어 instructions |

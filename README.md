@@ -1,10 +1,19 @@
 # CaseLaw MCP
 
-> 법제처 국가법령정보 공동활용 OpenAPI(191종)를 **MCP(Model Context Protocol) 서버**로 표준화하여, 변호사·로펌이 Claude Desktop / Cursor / VS Code 등 자연어 환경에서 한국 판례·법령·결정례를 검색·인용·요약할 수 있게 한다.
+> 법제처 국가법령정보 공동활용 OpenAPI(191종)를 **MCP(Model Context Protocol) 서버**로 표준화하여, 변호사·로펌이 **Claude Desktop · Gemini CLI · ChatGPT** 등 자연어 환경에서 한국 판례·법령·결정례를 검색·인용·요약할 수 있게 한다.
 
-[![PyPI](https://img.shields.io/pypi/v/caselaw-mcp)](https://pypi.org/project/caselaw-mcp/) [![CI](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml/badge.svg)](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml) [![Tests](https://img.shields.io/badge/tests-250%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-44-blue)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
+[![PyPI](https://img.shields.io/pypi/v/caselaw-mcp)](https://pypi.org/project/caselaw-mcp/) [![CI](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml/badge.svg)](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml) [![Tests](https://img.shields.io/badge/tests-267%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-44-blue)]() [![Clients](https://img.shields.io/badge/clients-Claude%20%7C%20Gemini%20%7C%20ChatGPT-purple)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
 
-**상태**: v0.8.0 — Tri-Track (변호사 + 일반인 + 외국인) 완성. 활성 MCP Tool **44종**.
+**상태**: v0.9.0 — Multi-Client Edition (Claude · Gemini · ChatGPT). 활성 MCP Tool **44종**, 단위 테스트 **267 PASS**.
+
+## 지원 클라이언트 매트릭스
+
+| 클라이언트 | Transport | 가이드 | 추가 인프라 |
+|---|---|---|---|
+| **Claude Desktop** | stdio | [docs/INSTALL.md §1](docs/INSTALL.md) · 원클릭 `scripts/install-caselaw-mcp.ps1` | 없음 |
+| **Gemini CLI** (Google 공식) | stdio | [docs/INSTALL_GEMINI.md](docs/INSTALL_GEMINI.md) · 원클릭 `scripts/install-caselaw-gemini.ps1` | 없음 |
+| **Cursor / VS Code** (Cline·Continue) | stdio | [docs/INSTALL.md §2~§3](docs/INSTALL.md) | 없음 |
+| **ChatGPT** (Apps SDK / Developer Mode) | streamable-http | [docs/INSTALL_CHATGPT.md](docs/INSTALL_CHATGPT.md) | Cloudflare Tunnel(권장) 또는 ngrok + Bearer 토큰 |
 
 📄 **일반인용 한 페이지 소개**: [docs/소개자료_일반인.md](docs/소개자료_일반인.md)
 🛠️ **개발자용 기술 노트 (아키텍처·보안·확장성)**: [docs/기술노트_MCP아키텍처.md](docs/기술노트_MCP아키텍처.md)

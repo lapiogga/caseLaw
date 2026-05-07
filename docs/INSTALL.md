@@ -1,6 +1,22 @@
-# INSTALL — Claude Desktop / Cursor / VS Code 등록
+# INSTALL — 클라이언트별 등록 가이드
 
 > **전제**: Phase 0/1 완료 (의존성 동기화·OC 키 설정 끝).
+
+## 0. 클라이언트별 분기 (v0.9.0~)
+
+caselaw-mcp 는 **stdio** 와 **HTTP(streamable)** 두 가지 transport 를 지원한다. 사용 클라이언트에 맞는 가이드를 선택:
+
+| 클라이언트 | Transport | 등록 가이드 | 추가 인프라 |
+|---|---|---|---|
+| **Claude Desktop** | stdio | 본 문서 §1 (아래) | 없음 |
+| **Gemini CLI** | stdio | [INSTALL_GEMINI.md](./INSTALL_GEMINI.md) | 없음 |
+| **Cursor / VS Code** | stdio | 본 문서 §2 / §3 | 없음 |
+| **ChatGPT** (Apps SDK / Developer Mode) | streamable-http | [INSTALL_CHATGPT.md](./INSTALL_CHATGPT.md) | Cloudflare Tunnel 또는 ngrok + Bearer 토큰 |
+| **개발자 (FastMCP Inspector)** | stdio | 본 문서 §4 | 없음 |
+
+> ChatGPT 만 로컬 stdio 미지원 — HTTP 모드로 외부 노출 + 인증 필수.
+
+---
 
 ## 1. Claude Desktop (Windows)
 

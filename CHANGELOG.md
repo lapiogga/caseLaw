@@ -2,6 +2,60 @@
 
 본 프로젝트는 [Semantic Versioning](https://semver.org/) 을 따른다.
 
+## [0.9.0] — 2026-05-07 — **Multi-Client Edition**
+
+ChatGPT · Gemini CLI 지원 추가. 단일 코드베이스가 stdio + streamable-http 두 transport 를 동시 지원.
+
+### Added — Phase 12 Multi-Client
+
+- **HTTP transport 모드**: `caselaw-mcp --transport http --host --port [--path]`
+  - FastMCP `stateless_http=True, json_response=True` (Cloudflare Tunnel · ChatGPT 호환)
+  - Starlette + uvicorn 위에 mcp.streamable_http_app() 마운트
+  - 기본 endpoint: `http://127.0.0.1:8000/mcp`
+- **Bearer 토큰 인증** (`src/caselaw_mcp/auth.py`)
+  - `CASELAW_AUTH_TOKEN` 환경변수 → ASGI 미들웨어로 전체 HTTP 요청 검증
+  - `secrets.compare_digest` 로 타이밍 공격 방어
+  - 미설정 시 인증 비활성 (로컬 개발 한정)
+  - 401 응답에 `WWW-Authenticate: Bearer` 헤더
+- **Gemini CLI 등록 가이드** (`docs/INSTALL_GEMINI.md`)
+  - `gemini mcp add` 명령 + settings.json 직접 편집 두 경로
+  - 코드 변경 0줄 (stdio 그대로 사용)
+- **ChatGPT 등록 가이드** (`docs/INSTALL_CHATGPT.md`)
+  - HTTP 모드 boot + Cloudflare Tunnel(권장) / ngrok(대안)
+  - ChatGPT Developer Mode 커넥터 등록 절차
+  - 7개 트러블슈팅 케이스 + 운영 체크리스트
+- **원클릭 등록 스크립트** `scripts/install-caselaw-gemini.ps1`
+  - Claude Desktop 등록 스크립트(`install-caselaw-mcp.ps1`)와 동일 패턴
+  - `-UseUvx` 스위치로 PyPI 모드 / 로컬 클론 모드 전환
+- **README · INSTALL.md 통합** — 5-클라이언트 매트릭스 (Claude / Gemini / Cursor / VS Code / ChatGPT)
+- 단위 테스트 17 추가 (auth 11 + transport_cli 6) → **총 267 PASS** (250 → 267)
+
+### Changed
+- `pyproject.toml`: `starlette>=0.37.0`, `uvicorn>=0.30.0` 의존성 추가
+- `server.py`:
+  - `argparse` 기반 CLI flag (`--transport`, `--host`, `--port`, `--path`)
+  - `_run_http()` 분기 함수 + lifespan 컨텍스트 매니저
+  - FastMCP 인스턴스에 `stateless_http=True, json_response=True` 옵션 (stdio 무영향)
+  - `ping().phase` = `"12-multi-client"`
+- `__version__` 0.8.0 → 0.9.0
+
+### Security
+- HTTP 모드 인증: 환경변수 미설정 → 인증 비활성. 외부 노출 시 반드시 `CASELAW_AUTH_TOKEN` 설정 필수.
+- Bearer 토큰은 32 바이트 무작위(base64) 권장 (가이드에 PowerShell 1줄 생성 명령 포함).
+- OC 키와 인증 토큰은 분리: 토큰이 노출돼도 OC 자체는 서버 측 `.env` 에 격리.
+
+### Out of Scope (Phase 13+ 후보)
+- OAuth 2.1 Authorization Server (다중 사용자 격리)
+- HTTPS 인증서 직접 발급 (Cloudflare 가 자동 처리)
+
+---
+
+## [0.8.0] — 2026-05-05 — Tri-Track (변호사 + 일반인 + 외국인)
+
+이전 안내. 자세한 내용은 [VERSION-STAMP.md](./VERSION-STAMP.md) 참조.
+
+---
+
 ## [0.1.0] — 2026-05-04
 
 🎉 첫 정식 릴리스. 활성 MCP Tool **20종**.
