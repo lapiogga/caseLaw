@@ -1,23 +1,25 @@
-# VERSION STAMP — v0.9.0 (Multi-Client Edition)
+# VERSION STAMP — v0.10.0 (Practitioner Doc Drafting)
 
 > **Initial Stamp**: 2026-05-05 13:20 KST (v0.8.0 Tri-Track)
 > **Distribution Stamp**: 2026-05-06 KST (배포·문서·자동화 트랙 완료)
 > **Multi-Client Stamp**: 2026-05-07 KST (Claude · Gemini · ChatGPT 3-클라이언트 동시 지원)
-> **Build**: 3-사용자 트랙 (변호사 + 일반인 + 외국인) × 3-클라이언트 (Claude · Gemini · ChatGPT)
+> **Doc Drafting Stamp**: 2026-05-08 KST (변호사 문서 초안 자동화 4종)
+> **Build**: 3-사용자 트랙 (변호사 + 일반인 + 외국인) × 3-클라이언트 × 4-문서 초안 (소장·의견서·준비서면·변호인 의견서)
 
 ## 마일스톤 인증
 
 | 항목 | 값 |
 |---|---|
-| **Version** | v0.9.0 |
-| **Codename** | Multi-Client Edition |
-| **MCP Tools** | 44 |
-| **단위 테스트** | **267** PASS (이전 250 → 신규 17: auth 11 + transport_cli 6) |
-| **통합 smoke** | 19 시나리오 + HTTP 모드 Bearer 정/오 (3 케이스 라이브 검증) |
+| **Version** | v0.10.0 |
+| **Codename** | Practitioner Doc Drafting |
+| **MCP Tools** | **48** (이전 44 → +4 drafting) |
+| **단위 테스트** | **314** PASS (이전 267 → +47 drafting) |
+| **통합 smoke** | 19 시나리오 + HTTP Bearer 라이브 + drafting 4 doc type 회귀 |
 | **UAT (Claude Desktop)** | ✅ v0.3.0 시점 통과 (2026-05-05 00:08 KST) |
 | **지원 클라이언트** | 5 (Claude Desktop · Gemini CLI · Cursor · VS Code · ChatGPT) |
 | **지원 transport** | 2 (stdio · streamable-http) |
 | **지원 언어** | 5 (ko/en/zh/vi/ja) |
+| **자동 생성 문서** | 4 (민사 소장 / 법률의견서 / 준비서면 / 형사 변호인 의견서) |
 
 ## 트랙별 도달 상태
 

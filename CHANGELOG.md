@@ -2,6 +2,50 @@
 
 본 프로젝트는 [Semantic Versioning](https://semver.org/) 을 따른다.
 
+## [0.10.0] — 2026-05-08 — **Practitioner Doc Drafting**
+
+변호사 트랙이 검색·분석에서 **문서 초안 자동 생성**까지 확장. 활성 MCP Tool **48종** (44 → 48), 단위 테스트 **314 PASS** (267 → 314).
+
+### Added — Phase 13 Doc Drafting
+
+- **`src/caselaw_mcp/tools/drafting/`** 신규 모듈
+  - `templates.py` — 공통 마크다운 헬퍼 (당사자 표·사실 연혁·증거 목록·인용 블록·면책)
+  - `civil_complaint.py` — `draft_civil_complaint`: 민사 소장 (청구취지·청구원인·입증방법·갑호증)
+  - `legal_opinion.py` — `draft_legal_opinion`: 법률의견서 (사실관계·쟁점·법리·결론)
+  - `preparatory_brief.py` — `draft_preparatory_brief`: 준비서면 (우리 주장·상대방 주장·반박·증거)
+  - `criminal_defense.py` — `draft_criminal_defense`: 형사 변호인 의견서 (공소사실·의견·양형감경·요청처분)
+- **자동 면책 부착** — 모든 `draft_*` 출력 끝에 면책 블록 자동 삽입.
+  - 변호사 모드 (`user_mode="lawyer"`): 짧은 면책
+  - 일반인 모드 (`user_mode="citizen"`): 강한 경고 + 무료 상담 안내 (법률구조공단 132 / 여성긴급전화 1366)
+  - 면책 누락 시 단위 테스트 fail (회귀 가드 4 케이스 — 4 doc type 모두)
+- **입력 검증** (시스템 경계 패턴)
+  - `validate_party`: name 필수, 빈 문자열·non-dict 거부
+  - `validate_amount`: 정수 KRW 만, 음수·bool·float 거부
+  - `validate_non_empty_list`: 빈 리스트 거부 (사실관계·증거 등)
+  - 잘못된 입력은 `ValueError` 로 즉시 거부
+
+### Changed
+
+- `server.py`: 신규 4 tool 등록 (총 **48 tool**), `ping().phase` = `"13-doc-drafting"`
+- `pyproject.toml`: 0.9.0 → 0.10.0
+- `src/caselaw_mcp/__init__.py`: `__version__` 0.10.0
+
+### Verified
+
+- 314 단위 테스트 PASS (drafting 47 신규 + 기존 267)
+- ruff lint + format PASS
+- 4 doc type 모두 면책 회귀 가드 통과 (parametrized)
+
+### Out of Scope (Phase 14+ 후보)
+
+- PDF/DOCX 직접 생성 (현재 마크다운만, 변환은 사용자 측)
+- 자동 한자 병기
+- 대법원 전자소송 API 연동 (자동 제출)
+- 검토 후 확정 워크플로 (`finalize_draft`)
+- 영문 문서 생성 (외국 로펌용)
+
+---
+
 ## [0.9.0] — 2026-05-07 — **Multi-Client Edition**
 
 ChatGPT · Gemini CLI 지원 추가. 단일 코드베이스가 stdio + streamable-http 두 transport 를 동시 지원.
