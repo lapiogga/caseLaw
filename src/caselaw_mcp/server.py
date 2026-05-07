@@ -49,6 +49,10 @@ from caselaw_mcp.tools.drafting import civil_complaint as draft_civil
 from caselaw_mcp.tools.drafting import criminal_defense as draft_criminal
 from caselaw_mcp.tools.drafting import legal_opinion as draft_opinion
 from caselaw_mcp.tools.drafting import preparatory_brief as draft_brief
+from caselaw_mcp.tools.prediction import civil_outcome as pred_civil
+from caselaw_mcp.tools.prediction import duration as pred_duration
+from caselaw_mcp.tools.prediction import resolution as pred_resolution
+from caselaw_mcp.tools.prediction import sentencing as pred_sentencing
 
 mcp = FastMCP(
     "caselaw-mcp",
@@ -76,7 +80,7 @@ def ping() -> dict[str, Any]:
         "version": __version__,
         "time_utc": datetime.now(UTC).isoformat(),
         "oc_configured": bool(settings.oc),
-        "phase": "13-doc-drafting",
+        "phase": "14-outcome-prediction",
         "user_locale": cit_locale.get_user_locale(),
         "user_mode": cit_mode.get_user_mode(),
     }
@@ -835,6 +839,83 @@ def draft_criminal_defense(
         applicable_statutes=applicable_statutes,
         requested_outcome=requested_outcome,
         user_mode=user_mode,
+    )
+
+
+# ─────────────────────────────────────────────
+# Outcome Prediction (Phase 14)
+# 의뢰인 첫 질문 3종에 표본 기반 통계로 답하는 변호사 트랙 도구.
+# 모든 출력에 면책 부착 + 표본 크기 명시. 통계지 보장이 아님.
+# ─────────────────────────────────────────────
+@mcp.tool()
+async def predict_sentencing(
+    query: str,
+    court: str | None = None,
+    max_samples: int = 20,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    use_full_text: bool = False,
+) -> dict[str, Any]:
+    """형사 양형 분포 예측. 유사 판례 N건 라벨링→벌금/집유/실형 비율."""
+    return await pred_sentencing.predict(
+        query=query,
+        court=court,
+        max_samples=max_samples,
+        date_from=date_from,
+        date_to=date_to,
+        use_full_text=use_full_text,
+    )
+
+
+@mcp.tool()
+async def predict_civil_outcome(
+    query: str,
+    court: str | None = None,
+    max_samples: int = 20,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    use_full_text: bool = False,
+) -> dict[str, Any]:
+    """민사 결과 분포 예측. 유사 판례 N건 라벨링→인용/일부/기각/취하 비율 + 인정 금액."""
+    return await pred_civil.predict(
+        query=query,
+        court=court,
+        max_samples=max_samples,
+        date_from=date_from,
+        date_to=date_to,
+        use_full_text=use_full_text,
+    )
+
+
+@mcp.tool()
+def estimate_case_duration(
+    case_type: str = "민사",
+    instance: str = "1심",
+    complexity: str = "보통",
+) -> dict[str, Any]:
+    """사건 1·2·3심 소요 기간 예측 (사법연감 시드 기반). 평균 + 95% CI."""
+    return pred_duration.estimate(
+        case_type=case_type,
+        instance=instance,
+        complexity=complexity,
+    )
+
+
+@mcp.tool()
+def dispute_resolution_options(
+    dispute_type: str = "civil",
+    claim_amount: int | None = None,
+    relationship_priority: bool = False,
+    speed_priority: bool = False,
+    cost_priority: bool = False,
+) -> dict[str, Any]:
+    """소송 vs 조정 vs 화해 vs 중재 비교 + 본건 추천."""
+    return pred_resolution.options(
+        dispute_type=dispute_type,
+        claim_amount=claim_amount,
+        relationship_priority=relationship_priority,
+        speed_priority=speed_priority,
+        cost_priority=cost_priority,
     )
 
 

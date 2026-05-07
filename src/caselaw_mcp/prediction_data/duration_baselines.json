@@ -1,0 +1,53 @@
+{
+  "_source": "한국 사법연감 평균 (개략 시드, 변호사 검토 시 정밀화 필요)",
+  "_units": "월 (months)",
+  "_note": "심급별 평균 + 단순/보통/복잡 사건 가산. 95% CI 는 통계 데이터 부족으로 ±50% 폭 가정 (실제 값은 변호사 자체 데이터 보강 필요).",
+  "civil": {
+    "1심": {
+      "단순": {"mean": 4, "ci_low": 2, "ci_high": 7},
+      "보통": {"mean": 5, "ci_low": 3, "ci_high": 9},
+      "복잡": {"mean": 8, "ci_low": 5, "ci_high": 14}
+    },
+    "2심": {
+      "단순": {"mean": 3, "ci_low": 2, "ci_high": 5},
+      "보통": {"mean": 4, "ci_low": 3, "ci_high": 7},
+      "복잡": {"mean": 6, "ci_low": 4, "ci_high": 10}
+    },
+    "3심": {
+      "단순": {"mean": 4, "ci_low": 2, "ci_high": 8},
+      "보통": {"mean": 5, "ci_low": 3, "ci_high": 9},
+      "복잡": {"mean": 7, "ci_low": 4, "ci_high": 12}
+    }
+  },
+  "criminal": {
+    "1심": {
+      "단순": {"mean": 2, "ci_low": 1, "ci_high": 4},
+      "보통": {"mean": 3, "ci_low": 2, "ci_high": 5},
+      "복잡": {"mean": 5, "ci_low": 3, "ci_high": 9}
+    },
+    "2심": {
+      "단순": {"mean": 2, "ci_low": 1, "ci_high": 3},
+      "보통": {"mean": 3, "ci_low": 2, "ci_high": 5},
+      "복잡": {"mean": 4, "ci_low": 3, "ci_high": 7}
+    },
+    "3심": {
+      "단순": {"mean": 3, "ci_low": 2, "ci_high": 5},
+      "보통": {"mean": 4, "ci_low": 3, "ci_high": 7},
+      "복잡": {"mean": 6, "ci_low": 4, "ci_high": 10}
+    }
+  },
+  "complexity_aliases": {
+    "단순": ["simple", "easy", "low"],
+    "보통": ["normal", "standard", "medium", "mid"],
+    "복잡": ["complex", "complicated", "high", "difficult"]
+  },
+  "case_type_aliases": {
+    "civil": ["민사", "civil", "민사사건"],
+    "criminal": ["형사", "criminal", "형사사건"]
+  },
+  "instance_aliases": {
+    "1심": ["1st", "first", "trial", "1"],
+    "2심": ["2nd", "second", "appeal", "appellate", "2"],
+    "3심": ["3rd", "third", "supreme", "final", "3"]
+  }
+}

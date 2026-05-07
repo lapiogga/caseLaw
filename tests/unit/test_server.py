@@ -19,7 +19,7 @@ def test_ping_returns_expected_keys() -> None:
     result = ping()
     assert result["status"] == "ok"
     assert result["version"] == __version__
-    assert result["phase"] == "13-doc-drafting"
+    assert result["phase"] == "14-outcome-prediction"
     assert "time_utc" in result
     assert isinstance(result["oc_configured"], bool)
 
