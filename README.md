@@ -2,9 +2,9 @@
 
 > 법제처 국가법령정보 공동활용 OpenAPI(191종)를 **MCP(Model Context Protocol) 서버**로 표준화하여, 변호사·로펌이 **Claude Desktop · Gemini CLI · ChatGPT** 등 자연어 환경에서 한국 판례·법령·결정례를 검색·인용·요약할 수 있게 한다.
 
-[![PyPI](https://img.shields.io/pypi/v/caselaw-mcp)](https://pypi.org/project/caselaw-mcp/) [![CI](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml/badge.svg)](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml) [![Tests](https://img.shields.io/badge/tests-267%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-44-blue)]() [![Clients](https://img.shields.io/badge/clients-Claude%20%7C%20Gemini%20%7C%20ChatGPT-purple)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
+[![PyPI](https://img.shields.io/pypi/v/caselaw-mcp)](https://pypi.org/project/caselaw-mcp/) [![CI](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml/badge.svg)](https://github.com/lapiogga/caseLaw/actions/workflows/ci.yml) [![Tests](https://img.shields.io/badge/tests-352%20passed-brightgreen)]() [![Tools](https://img.shields.io/badge/MCP%20tools-52-blue)]() [![Clients](https://img.shields.io/badge/clients-Claude%20%7C%20Gemini%20%7C%20ChatGPT-purple)]() [![Outputs](https://img.shields.io/badge/outputs-search%20%7C%20draft%20%7C%20predict-brightgreen)]() [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]() [![Languages](https://img.shields.io/badge/i18n-ko%2Fen%2Fzh%2Fvi%2Fja-orange)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
 
-**상태**: v0.9.0 — Multi-Client Edition (Claude · Gemini · ChatGPT). 활성 MCP Tool **44종**, 단위 테스트 **267 PASS**.
+**상태**: v0.11.0 — Outcome Prediction. 활성 MCP Tool **52종**, 단위 테스트 **352 PASS**, 자동 생성 문서 4종 + 결과 예측 4종.
 
 ## 지원 클라이언트 매트릭스
 
@@ -22,9 +22,11 @@
 
 ## 한 줄 요약
 
-> 변호사가 채팅창에 *"음주운전 양형 5건, 사건번호·법원·판시사항 표로 정리"* 라고 입력하면, Claude 가 자동으로 본 MCP 의 `search_precedent` + `get_precedent` 를 호출하여 실제 대법원 판례를 회수·정리한다. 인용 사건번호는 100% 실재.
+> **변호사 (검색 → 예측 → 작성 한 줄 워크플로)**: *"음주운전 양형 분포 보여주고, 그 결과로 변호인 의견서 초안까지 만들어 줘"* 한 줄로 `predict_sentencing` → `draft_criminal_defense` 까지 자동 체이닝. 인용 사건번호 100% 실재.
 >
-> 일반인은 *"3년 전 친구한테 5천만원 빌려줬는데 안 갚아요. 어떻게 해야 하죠?"* 라고 입력하면 분쟁 분류·시효 점검·소송비용·무료자원·변호사 상담 키트까지 자동 생성된다.
+> **일반인**: *"3년 전 친구한테 5천만원 빌려줬는데 안 갚아요. 어떻게 해야 하죠?"* 라고 입력하면 분쟁 분류·시효 점검·소송비용·무료자원·변호사 상담 키트까지 자동 생성. 50종 분쟁 카테고리 + 6턴 인터뷰 + 30종 시효 + 인지법.
+>
+> **외국인 사용자**: 5언어(ko/en/zh/vi/ja) 면책·라벨·외국인 자원 (1345·1577-1366·1577-5432) 자동 매핑.
 
 ---
 
@@ -118,7 +120,7 @@ copy .env.example .env
 #  - 마이페이지 → API인증키관리에서 확인
 
 # 4. 테스트
-uv run pytest -v       # 91 passed
+uv run pytest -v       # 352 passed
 
 # 5. MCP Inspector (디버깅 UI)
 uv run mcp dev src\caselaw_mcp\server.py
@@ -128,28 +130,55 @@ uv run mcp dev src\caselaw_mcp\server.py
 
 ---
 
-## MCP Tools 한눈에 (20종)
+## MCP Tools 한눈에 (52종)
+
+### 변호사 트랙 (35종)
 
 | 카테고리 | Tools | 비고 |
 |---|---|---|
-| 헬스 | `ping` | 서버·OC 키 상태 |
-| **판례** | `search_precedent` / `get_precedent` / `find_related_precedents` | 대법원·고등·지방. 참조판례 자동 추출 |
+| 헬스 | `ping` | 서버·OC 키 상태·phase·user_mode·user_locale |
+| **판례** | `search_precedent` / `get_precedent` / `find_related_precedents` / `find_precedent_by_citation` | 대법원·고등·지방. 참조판례·인용 역검색 |
 | **현행법령** | `search_statute` / `get_statute` | 시행일 기준 |
 | 헌재 | `search_constitutional_decision` / `get_constitutional_decision` | |
 | 법령해석례 | `search_law_interpretation` / `get_law_interpretation` | 법제처 해석 |
 | 행정심판례 | `search_admin_judgment` / `get_admin_judgment` | 국민권익위·각급 행심위 |
-| 위원회 결정문 | `search_committee_decision` / `get_committee_decision` | **12종 enum** (공정위·노동위·금융위 등) |
-| 특별행정심판 | `search_special_admin_judgment` / `get_special_admin_judgment` | **4종 enum** (조세·해양·소청 등) |
+| 위원회 결정문 | `search_committee_decision` / `get_committee_decision` | **12종 enum** |
+| 특별행정심판 | `search_special_admin_judgment` / `get_special_admin_judgment` | **4종 enum** |
 | 중앙부처 해석 | `search_central_dept_interpretation` / `get_central_dept_interpretation` | **39개 부처 enum** |
 | 법령용어 | `search_legal_term` / `get_legal_term` | 사전 |
-| 정적 | `lookup_case_codes` | 코드 매핑표 |
+| **분석 helper** | `analyze_precedent_trend` / `format_citation` / `compare_precedents` | 추세·인용·비교 |
+| 첨부 | `download_attachment` / `extract_attachment_links` | path traversal 방지 |
+| **문서 초안** (v0.10.0) | `draft_civil_complaint` / `draft_legal_opinion` / `draft_preparatory_brief` / `draft_criminal_defense` | 한국 표준 양식 마크다운 + 자동 면책 |
+| **결과 예측** (v0.11.0) | `predict_sentencing` / `predict_civil_outcome` / `estimate_case_duration` / `dispute_resolution_options` | 표본 N + 95% CI + 면책 |
+
+### 일반인 트랙 (12종)
+
+| 카테고리 | Tools | 비고 |
+|---|---|---|
+| 모드·면책 | `set_user_mode` / `get_user_mode` / `get_disclaimer` | 변호사·일반인 모드 분기 |
+| **분쟁 분류** | `triage_dispute` | **50종 카테고리** (민사 19 + 형사 8 + 가사 8 + 노동 5 + 행정 5 + 소비 5) |
+| **시효** | `list_limitation_categories` / `check_statute_of_limitations` | **30종 시효** + 중단 사유 |
+| **비용** | `estimate_litigation_cost` | 인지법 4구간 + 변호사비 9종 + 무료자원 7개 |
+| **인터뷰** | `get_interview_flow` / `interview_facts` | 6턴 사실관계 인터뷰 (stateless) |
+| **사건 강도** | `evaluate_case_strength` | 라벨 9종 |
+| **무료 상담** | `recommend_pro_bono` | 전국 14 + 지역 14 + KLAC 6 + 도메인 특화 |
+| **상담 키트** | `prepare_consultation_kit` | 13섹션 마크다운 + 변호사 질문 10개 |
+
+### 외국인 사용자 트랙 (5종)
+
+| Tools | 비고 |
+|---|---|
+| `set_user_locale` / `get_user_locale` / `get_disclaimer_localized` / `list_disclaimers_localized` / `get_foreigner_resources` | 5언어 (ko/en/zh/vi/ja) + 외국인종합안내 1345 등 |
 
 자세한 입출력 스키마: [`docs/API_REFERENCE.md`](./docs/API_REFERENCE.md)
 전체 코드·별칭 사전: [`docs/CODES.md`](./docs/CODES.md)
+일반인 모드 가이드: [`docs/CITIZEN_MODE.md`](./docs/CITIZEN_MODE.md)
 
 ---
 
-## 자연어 사용 예시 (Claude Desktop)
+## 자연어 사용 예시 (Claude Desktop · Gemini CLI · ChatGPT)
+
+### 검색·인용 (변호사 기본 워크플로)
 
 ```
 음주운전 관련 최근 대법원 판례 5개 찾아서 사건명만 정리해줘.
@@ -163,6 +192,41 @@ uv run mcp dev src\caselaw_mcp\server.py
 법령용어 "공탁" 사전 검색.
 ```
 
+### 결과 예측 (v0.11.0 신규)
+
+```
+음주운전 양형 분포 알려줘. 대법원 판례 30건 표본으로.
+→ predict_sentencing: 벌금 53% / 집유 32% / 실형 11% (가상 분포)
+
+대여금 5천만원 청구 사건의 평균 인용률과 인정 금액 분포는?
+→ predict_civil_outcome: 인용 60% / 일부 25% / 기각 15%, 평균 인정 4,200만원
+
+민사 1심 평균 소요 기간은? 단순 사건 기준.
+→ estimate_case_duration: 평균 4개월, 95% CI [2, 7]개월
+
+5천만원 대여금. 6개월 안에 끝내고 관계 유지 우선.
+→ dispute_resolution_options: 화해(settlement) 추천 + 4-옵션 매트릭스
+```
+
+### 문서 초안 자동 (v0.10.0 신규)
+
+```
+대여금 5천만 원, 원고 박원고 (서울 강남구), 피고 김피고 (서울 송파구).
+2022. 3. 15. 대여, 변제기 2023. 3. 14., 미상환. 차용증·통장사본 첨부.
+→ draft_civil_complaint: 한국 표준 소장 마크다운 + 면책
+
+음주운전 양형 자문 의견서. 혈중알코올농도 0.08, 사고 없음, 전과 없음.
+→ draft_legal_opinion: 쟁점·법리·결론 골격 + 유사 판례 인용
+```
+
+### 일반인 트랙 (변호사 만나기 전 사전진단)
+
+```
+3년 전 친구한테 5천만원 빌려줬는데 안 갚아요. 어떻게 해야 하죠?
+→ triage_dispute → check_statute_of_limitations → estimate_litigation_cost
+   → recommend_pro_bono → prepare_consultation_kit (13섹션 마크다운)
+```
+
 전체 30종 시나리오: [`docs/EXAMPLES.md`](./docs/EXAMPLES.md)
 
 ---
@@ -171,58 +235,90 @@ uv run mcp dev src\caselaw_mcp\server.py
 
 ```
 CaseLaw/
-├── PLAN.md                     # 종합 계획서
 ├── README.md
-├── CHANGELOG.md                # 버전 히스토리
-├── pyproject.toml              # uv 프로젝트
-├── .env.example                # OC 키 템플릿
+├── CHANGELOG.md                # 버전 히스토리 (v0.1.0 ~ v0.11.0)
+├── VERSION-STAMP.md            # 마일스톤 인증 + 동결 코드 영역
+├── pyproject.toml              # uv 프로젝트 (52 tool, hatchling sdist exclude)
+├── .env.example                # OC 키 + Bearer 토큰 템플릿
 ├── src/caselaw_mcp/
-│   ├── server.py               # FastMCP 엔트리 (20 tool 등록)
+│   ├── server.py               # FastMCP 엔트리 (52 tool 등록, --transport stdio|http)
+│   ├── auth.py                 # Bearer 토큰 ASGI 미들웨어 (CASELAW_AUTH_TOKEN)
 │   ├── client.py               # 비동기 HTTP + 재시도 + URL 마스킹
-│   ├── parsers.py              # XML/JSON → 영문 키 정규화 (60+ 키)
+│   ├── parsers.py              # XML/JSON → 영문 키 정규화
 │   ├── cache.py                # SQLite TTL 캐시
-│   ├── codes.py                # 사건종류·법원·위원회·부처 코드 (105+ 별칭)
-│   ├── config.py               # pydantic-settings 환경 로더
+│   ├── codes.py                # 사건종류·법원·위원회·부처 코드 (200+ 별칭)
+│   ├── config.py               # pydantic-settings (.env 자동 로드)
+│   ├── citizen_data/           # 시드 (categories 50 + limitations 30 + court_fees 등)
+│   ├── prediction_data/        # 사법연감 시드 (duration_baselines.json)
 │   └── tools/
-│       ├── precedent.py        # 판례 + find_related
+│       ├── precedent.py        # 판례 + find_related + find_by_citation
 │       ├── statute.py          # 현행법령
 │       ├── constitution.py     # 헌재결정례
 │       ├── interpretation.py   # 법령해석례
 │       ├── admin_judg.py       # 행정심판례
-│       ├── committee.py        # 위원회 12종 통합
-│       ├── special_judg.py     # 특별행정심판 4종 통합
-│       ├── dept_interpretation.py # 중앙부처 39종 통합
-│       └── terminology.py      # 법령용어
+│       ├── committee.py        # 위원회 12종 enum
+│       ├── special_judg.py     # 특별행정심판 4종 enum
+│       ├── dept_interpretation.py # 중앙부처 39종 enum
+│       ├── terminology.py      # 법령용어
+│       ├── analytics.py        # analyze_trend / format_citation / compare
+│       ├── attachments.py      # 별표·HWP/PDF 다운로드
+│       ├── citation_lookup.py  # 인용 텍스트 → prec_id 역검색
+│       ├── citizen/            # 일반인 트랙 (mode/locale/disclaimer/triage 등 12 tool)
+│       ├── drafting/           # 변호사 문서 4종 (소장·의견서·준비서면·변호인의견서) v0.10.0
+│       └── prediction/         # 결과 예측 4종 (양형·민사결과·기간·해결옵션) v0.11.0
 ├── tests/
-│   ├── unit/                   # 91 단위 테스트
-│   └── integration/
-│       ├── smoke_live.py       # Phase 1 시나리오 4종
-│       ├── smoke_phase2.py     # Phase 2 시나리오 4종
-│       └── smoke_phase3.py     # Phase 3 시나리오 4종
+│   ├── unit/                   # 352 단위 테스트
+│   └── integration/            # smoke 시나리오 19종
 ├── docs/
-│   ├── INSTALL.md              # Claude Desktop / Cursor 등록
-│   ├── API_REFERENCE.md        # 20 tool 입출력 스키마
+│   ├── INSTALL.md              # 5-클라이언트 매트릭스
+│   ├── INSTALL_GEMINI.md       # Gemini CLI 등록
+│   ├── INSTALL_CHATGPT.md      # ChatGPT (HTTP + Cloudflare Tunnel)
+│   ├── API_REFERENCE.md        # tool 입출력 스키마
 │   ├── CODES.md                # 전체 코드·별칭 사전
+│   ├── CITIZEN_MODE.md         # 일반인 트랙 가이드
+│   ├── OC_PERMISSIONS.md       # OC 권한 확장
+│   ├── OC발급_가이드.md         # OC 키 9단계 발급
 │   ├── EXAMPLES.md             # 변호사 자연어 30종
-│   └── claude_desktop_config.example.json
+│   ├── 설치_시각가이드.md       # 비기술자용 화면 캡처 11장
+│   ├── 소개자료_일반인.md       # 1페이지 소개
+│   ├── 기술노트_MCP아키텍처.md  # 14섹션 기술 노트
+│   └── promo/                  # 영상·캡처 자료 (mp4 git ignore)
+├── scripts/
+│   ├── 설치하기.bat             # 비기술자 더블클릭 진입점
+│   ├── setup-for-novice.ps1    # 자동 설치 (Python·uv·Claude Desktop)
+│   ├── install-caselaw-mcp.ps1 # Claude Desktop config 등록
+│   └── install-caselaw-gemini.ps1 # Gemini CLI settings.json 등록
+├── .github/workflows/
+│   ├── ci.yml                  # Python 3.11/12/13 매트릭스 + ruff + pytest
+│   └── publish.yml             # Release published → PyPI Trusted OIDC 자동
 ├── reference/                  # 법제처 OpenAPI 가이드 원본
-└── .planning/                  # GSD 플래닝 (PROJECT/ROADMAP/PROMPTS-LOG/phases/*)
+└── .planning/                  # GSD 플래닝 (.gitignore — 로컬 메모)
 ```
 
 ---
 
 ## 로드맵 진행
 
-| Phase | 내용 | 상태 |
-|---|---|---|
-| 0 | Bootstrap (uv, ping tool, CI) | ✅ |
-| 1 | 판례 + 법령 MVP (5 tool) | ✅ |
-| 2 | 헌재·해석례·심판례 + 관련판례 추천 | ✅ |
-| 3 | 위원회 12 + 특별심판 4 + 중앙부처 39 + 법령용어 | ✅ |
-| **4** | **품질·배포 (API_REFERENCE / CODES / CHANGELOG / Release)** | ✅ |
-| 5+ | 외국 판례 연동 (CourtListener·Find Case Law) — 백로그 | ⏭ |
+| Phase | 내용 | 버전 | 상태 |
+|---|---|---|---|
+| 0 | Bootstrap (uv, ping tool, CI) | — | ✅ |
+| 1 | 판례 + 법령 MVP (5 tool) | — | ✅ |
+| 2 | 헌재·해석례·심판례 + 관련판례 추천 | — | ✅ |
+| 3 | 위원회 12 + 특별심판 4 + 중앙부처 39 + 법령용어 | — | ✅ |
+| 4 | 품질·배포 (API_REFERENCE / CODES / CHANGELOG / Release) | v0.1.0 | ✅ |
+| 5 | Practitioner Helpers (analyze_trend / format_citation / compare) | v0.2.0 | ✅ |
+| 6 | Citation Lookup + Attachment Download | v0.3.0 | ✅ |
+| 7 | Citizen Mode MVP (mode / disclaimer / triage 30종) | v0.4.0 | ✅ |
+| 8 | Statute & Cost (시효 30 + 인지법) | v0.5.0 | ✅ |
+| 9 | Interview & Strength (6턴 인터뷰 + 사건 강도) | v0.6.0 | ✅ |
+| 10 | Pro Bono & Consultation Kit (50종 카테고리) | v0.7.0 | ✅ |
+| 11 | i18n MVP (5언어 + 외국인 자원) | v0.8.0 | ✅ |
+| 12 | **Multi-Client Edition** (Claude · Gemini · ChatGPT) | **v0.9.0** | ✅ |
+| 13 | **Practitioner Doc Drafting** (소장·의견서·준비서면·변호인 의견서) | **v0.10.0** | ✅ |
+| 14 | **Outcome Prediction** (양형·민사결과·기간·해결옵션) | **v0.11.0** | ✅ |
+| 15+ | Backlog: ChatGPT OAuth 2.1 / Vector DB / 외국 판례 / ML 라벨링 | — | ⏭ |
 
-상세: [`PLAN.md`](./PLAN.md) · [`.planning/ROADMAP.md`](./.planning/ROADMAP.md)
+상세: [`.planning/ROADMAP.md`](./.planning/ROADMAP.md) · [`CHANGELOG.md`](./CHANGELOG.md) · [`VERSION-STAMP.md`](./VERSION-STAMP.md)
 
 ---
 
@@ -254,7 +350,7 @@ CaseLaw/
 
 ## 라이선스
 
-MIT (예정 — 정식 release 시 LICENSE 파일 추가)
+MIT (`LICENSE` 파일 포함, 무료 + 상업적 사용 가능)
 
 ---
 
