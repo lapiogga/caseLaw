@@ -126,3 +126,66 @@
 | Bearer 누락 | `curl POST /mcp/` (Authorization 없음) | HTTP 401 |
 | Bearer 오류 | `curl POST /mcp/ -H 'Authorization: Bearer wrong'` | HTTP 401 |
 | Bearer 정상 | `curl POST /mcp/ -H 'Authorization: Bearer <token>'` (initialize) | 200 + serverInfo + 한국어 instructions |
+
+---
+
+## 세션 마감 로그 (2026-05-07 ~ 2026-05-08)
+
+본 세션은 **v0.8.0 Tri-Track 종료 시점**에서 시작해 **v0.11.0 Outcome Prediction**
+까지 도달.
+
+### 진행 요약 (3 마일스톤)
+
+| 단계 | Phase | 버전 | 핵심 산출 |
+|---|---|---|---|
+| **1** | **Phase 12 — Multi-Client Edition** | v0.9.0 | HTTP transport + Bearer 인증 (auth.py) + Gemini CLI 가이드 + ChatGPT 우회 검토 + 5-클라이언트 매트릭스 |
+| **2** | **Phase 13 — Practitioner Doc Drafting** | v0.10.0 | 변호사 문서 4종 자동 생성 (소장·의견서·준비서면·변호인 의견서) + 자동 면책 회귀 가드 |
+| **3** | **Phase 14 — Outcome Prediction** | v0.11.0 | 결과 예측 4종 (양형·민사결과·기간·해결옵션) + 표본 가드 + 사법연감 시드 |
+
+### 인프라 자동화 (본 세션 신규)
+
+- **PyPI Trusted Publishing 워크플로우** (`.github/workflows/publish.yml`) 추가 →
+  v0.10.0 부터 GitHub Release published 시 OIDC 자동 publish (토큰 노출 0)
+- **CI 빨강 해소**: `docs/promo/automation/capture_pages.py` ruff format
+- **sdist 슬림화**: 62MB → 157KB (promo 영상·캡처 exclude 패턴 추가)
+- **Bearer 인증 결함 fix**: pydantic-settings `.env` 가 `os.environ` 미주입 →
+  Settings 기반 일관 경로로 변경 (silent bypass 차단)
+- **영상 정리**: mp4 git ignore 패턴 + 새 캡처 PNG 2장 add
+- **README v0.11.0 전면 정합화**: 옛날 정보 (20 tool / 91 PASS / Phase 5 백로그)
+  → 현재 (52 tool / 352 PASS / Phase 14 완료)
+
+### 외부 배포 결과
+
+- **GitHub main**: 16 commits push, CI 녹색 유지
+- **GitHub Release v0.9.0 / v0.10.0 / v0.11.0** 정식 (각 wheel + sdist + ZIP installer 첨부)
+- **PyPI v0.9.0 / v0.10.0 / v0.11.0** LIVE (Trusted Publishing 자동 — `uvx caselaw-mcp` 사용자 즉시 v0.11.0)
+- **비기술자 ZIP** v0.11.0 (사용자 무액션 자동 업그레이드)
+- **워킹트리·외부 노출**: 모두 클린 / 종료
+
+### 라이브 UAT (사용자 검증 완료)
+
+| 클라이언트 | 검증 시점 |
+|---|---|
+| Claude Desktop | v0.3.0 (2026-05-05) |
+| Gemini CLI (OAuth) | v0.9.0 (2026-05-07, 헤드리스 모드 ping + 음주운전 5건 검색 회수) |
+| ChatGPT Custom MCP | OAuth 2.1 미지원 정책으로 직결 보류 (Phase 15+ 후보) |
+
+### 다음 세션 진입점 (백로그 우선순위)
+
+1. **ChatGPT OAuth 2.1 Resource Server** — Auth0/Stytch IdP 통합으로 직결 완성
+2. **Pack 2 Quality Guards** — citation_validator / precedent_consistency_check / brief_review_checklist (할루시네이션 방지)
+3. **Pack 3 Pre-Drafting Workflow** — fact_pattern_extractor / timeline_builder / evidence_organizer (draft_* 입력 품질 ↑)
+4. **ML 라벨링 정확도 향상** (Phase 14 휴리스틱 → 변호사 검수 데이터 기반 학습)
+5. **외국 판례 통합** (CourtListener / Find Case Law UK)
+6. **open-webui 자체 호스팅 가이드** (gemini.google.com 대체)
+7. **변호사 베타 UAT 모집**
+
+### 동결 코드 영역 갱신 (v0.11.0)
+
+- `src/caselaw_mcp/server.py` 의 **52 tool signature**
+- `src/caselaw_mcp/tools/drafting/templates.py` 의 `DISCLAIMER_MARKER` (회귀 가드 grep 대상)
+- `src/caselaw_mcp/tools/prediction/labels.py` 의 5×5 라벨 universe (CIVIL_LABELS · SENTENCING_LABELS) — 추가만 가능
+- `src/caselaw_mcp/prediction_data/duration_baselines.json` 의 18 baseline (추가만)
+- 모든 `draft_*` / `predict_*` 출력 dict 의 키 (`doc_type`·`markdown` 필수)
+- 표본 크기 가드 임계값 (5/10/30) — 변경 시 변호사 가이드 동시 갱신
+- 그 외 v0.9.0 동결 영역 모두 유지
