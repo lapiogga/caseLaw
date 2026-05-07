@@ -45,6 +45,10 @@ from caselaw_mcp.tools.citizen import mode as cit_mode
 from caselaw_mcp.tools.citizen import pro_bono as cit_probono
 from caselaw_mcp.tools.citizen import strength as cit_strength
 from caselaw_mcp.tools.citizen import triage as cit_triage
+from caselaw_mcp.tools.drafting import civil_complaint as draft_civil
+from caselaw_mcp.tools.drafting import criminal_defense as draft_criminal
+from caselaw_mcp.tools.drafting import legal_opinion as draft_opinion
+from caselaw_mcp.tools.drafting import preparatory_brief as draft_brief
 
 mcp = FastMCP(
     "caselaw-mcp",
@@ -72,7 +76,7 @@ def ping() -> dict[str, Any]:
         "version": __version__,
         "time_utc": datetime.now(UTC).isoformat(),
         "oc_configured": bool(settings.oc),
-        "phase": "12-multi-client",
+        "phase": "13-doc-drafting",
         "user_locale": cit_locale.get_user_locale(),
         "user_mode": cit_mode.get_user_mode(),
     }
@@ -719,6 +723,118 @@ def prepare_consultation_kit(
         cost_result=cost_result,
         similar_precedents=similar_precedents,
         pro_bono_result=pro_bono_result,
+    )
+
+
+# ─────────────────────────────────────────────
+# Practitioner Doc Drafting (Phase 13)
+# 모든 draft_* 출력에 자동 면책 부착. 변호사 검토 없이 법원 제출 금지.
+# ─────────────────────────────────────────────
+@mcp.tool()
+def draft_civil_complaint(
+    plaintiff: dict[str, Any],
+    defendant: dict[str, Any],
+    claim_type: str,
+    claim_amount: int,
+    facts_chronology: list[str],
+    statute_basis: list[str] | None = None,
+    related_precedents: list[int] | None = None,
+    evidence_list: list[dict[str, Any]] | None = None,
+    court_name: str = "서울중앙지방법원",
+    interest_rate_percent: float | None = 12.0,
+    user_mode: str = "lawyer",
+) -> dict[str, Any]:
+    """민사 소장 마크다운 초안. 청구취지/청구원인/입증방법 자동 골격."""
+    return draft_civil.draft(
+        plaintiff=plaintiff,
+        defendant=defendant,
+        claim_type=claim_type,
+        claim_amount=claim_amount,
+        facts_chronology=facts_chronology,
+        statute_basis=statute_basis,
+        related_precedents=related_precedents,
+        evidence_list=evidence_list,
+        court_name=court_name,
+        interest_rate_percent=interest_rate_percent,
+        user_mode=user_mode,
+    )
+
+
+@mcp.tool()
+def draft_legal_opinion(
+    case_facts: list[str],
+    issues: list[str],
+    similar_precedents: list[int] | None = None,
+    applicable_statutes: list[str] | None = None,
+    conclusion_summary: str | None = None,
+    client_name: str | None = None,
+    case_caption: str | None = None,
+    user_mode: str = "lawyer",
+) -> dict[str, Any]:
+    """법률의견서 마크다운 초안. 쟁점→법리→결론 정형 + 유사 판례 인용."""
+    return draft_opinion.draft(
+        case_facts=case_facts,
+        issues=issues,
+        similar_precedents=similar_precedents,
+        applicable_statutes=applicable_statutes,
+        conclusion_summary=conclusion_summary,
+        client_name=client_name,
+        case_caption=case_caption,
+        user_mode=user_mode,
+    )
+
+
+@mcp.tool()
+def draft_preparatory_brief(
+    case_caption: str,
+    case_number: str,
+    our_role: str,
+    our_position: list[str],
+    opponent_arguments: list[str] | None = None,
+    rebuttal_points: list[str] | None = None,
+    our_evidence: list[dict[str, Any]] | None = None,
+    related_precedents: list[int] | None = None,
+    applicable_statutes: list[str] | None = None,
+    user_mode: str = "lawyer",
+) -> dict[str, Any]:
+    """준비서면 마크다운 초안. 우리 입장 + 상대방 주장 반박 + 증거."""
+    return draft_brief.draft(
+        case_caption=case_caption,
+        case_number=case_number,
+        our_role=our_role,
+        our_position=our_position,
+        opponent_arguments=opponent_arguments,
+        rebuttal_points=rebuttal_points,
+        our_evidence=our_evidence,
+        related_precedents=related_precedents,
+        applicable_statutes=applicable_statutes,
+        user_mode=user_mode,
+    )
+
+
+@mcp.tool()
+def draft_criminal_defense(
+    defendant: dict[str, Any],
+    case_number: str,
+    charges: list[str],
+    our_arguments: list[str],
+    mitigating_factors: list[str] | None = None,
+    similar_precedents: list[int] | None = None,
+    applicable_statutes: list[str] | None = None,
+    requested_outcome: str | None = None,
+    user_mode: str = "lawyer",
+) -> dict[str, Any]:
+    """형사 변호인 의견서 마크다운 초안. 공소사실+의견+양형감경+요청처분."""
+    return draft_criminal.draft(
+        defendant=defendant,
+        case_number=case_number,
+        charges=charges,
+        our_arguments=our_arguments,
+        mitigating_factors=mitigating_factors,
+        similar_precedents=similar_precedents,
+        applicable_statutes=applicable_statutes,
+        requested_outcome=requested_outcome,
+        user_mode=user_mode,
     )
 
 

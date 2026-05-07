@@ -1,7 +1,7 @@
 [project]
 name = "caselaw-mcp"
-version = "0.9.0"
-description = "법제처 국가법령정보 공동활용 OpenAPI 기반 MCP 서버 (변호사·로펌 AI 보조, Multi-Client)"
+version = "0.10.0"
+description = "법제처 국가법령정보 공동활용 OpenAPI 기반 MCP 서버 (변호사·로펌 AI 보조, 문서 초안 자동화)"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
