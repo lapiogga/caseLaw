@@ -90,6 +90,10 @@ logs/
 !docs/promo/**/*.gif
 # 영상 파일은 용량이 크므로 git 추적 X (YouTube에 업로드 후 URL만 README 임베드)
 docs/promo/videos/
+# images/ 디렉토리에 우연히 들어간 영상도 함께 제외 (38~46MB 단위라 push 비대)
+docs/promo/**/*.mp4
+docs/promo/**/*.mov
+docs/promo/**/*.webm
 
 # Vrew 프로젝트 작업 파일 (개인 작업용, README 노출 대상 아님)
 *.vrew
